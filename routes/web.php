@@ -30,6 +30,10 @@ Route::get('/', function(){
 Route::get('register1', function(){
     return view('register1');
 });
-Route::get('Dash', function(){
-    return view('layouts.admin');
+
+// admin
+Route::middleware(['CekRole:admin'])->group(function () {
+    Route::get('/', function(){
+        return view('auth.login');
+    });
 });
