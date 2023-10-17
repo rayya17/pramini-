@@ -6,7 +6,6 @@
             <div class="col-md-8">
                 <div class="card">
                     <ul class="navbar-nav me-auto">
-
                     </ul>
 
                     <!-- Right Side Of Navbar -->
