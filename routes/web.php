@@ -16,9 +16,6 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/',function () {
-    return view('welcome');
-});
 
 Auth::routes(['verify'=>true]);
 
@@ -27,9 +24,12 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 // Route::get('/login', [Authcontroller::class, 'login']);
 
 // Route::get('/register', [Authcontroller::class, 'register']);
-Route::get('login1', function(){
-    return view('login1');
+Route::get('/', function(){
+    return view('auth.login');
 });
 Route::get('register1', function(){
     return view('register1');
+});
+Route::get('Dash', function(){
+    return view('layouts.admin');
 });
