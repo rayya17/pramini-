@@ -20,6 +20,12 @@
     <script src="../../../kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
     <link id="pagestyle" href="../assets/css/soft-ui-dashboard.minf2ad.css?v=1.0.7" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('startbootstrap/css/sb-admin-2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('startbootstrap/css/sb-admin-2.css') }}">
+    <link href="{{ asset('/startbootstrap/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -92,6 +98,23 @@
     <link href="
 https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css
 " rel="stylesheet">
+
+<script src="{{ asset('/startbootstrap/vendor/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('/startbootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="{{ asset('/startbootstrap/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="{{ asset('/startbootstrap/js/sb-admin-2.min.js') }}"></script>
+
+<!-- Page level plugins -->
+<script src="{{ asset('/startbootstrap/vendor/chart.js/Chart.min.js') }}"></script>
+
+<!-- Page level custom scripts -->
+<script src="{{ asset('/startbootstrap/js/demo/chart-area-demo.js') }}"></script>
+<script src="{{ asset('/startbootstrap/js/demo/chart-pie-demo.js') }}"></script>
+
 
 </body>
 
