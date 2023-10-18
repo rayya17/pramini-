@@ -1,48 +1,57 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Auth\Events\PasswordReset;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
-    use AuthenticatesUsers;
-
     /**
-     * Where to redirect users after login.
-     *
-     * @var string
+     * Display a listing of the resource.
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
-    protected function redirectTo()
+    public function index()
     {
+        $user = User::all();
+        return view('loginregister.login', compact('user'));
+    }
 
-        if (auth()->user()->role == 'admin') {
-            return '/home';
-        } else {
-            return '/'; // Ganti '/user' dengan URL halaman pengguna.
-        }
-    }
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function authenticate(Request $request): RedirectResponse
     {
-        $this->middleware('guest')->except('logout');
+        // dd($request->all());
+        $user = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ],[
+            'email.required' => 'email tidak boleh kosong',
+            'email.email' => 'email tidak valid',
+            'password.required' => 'password tidak boleh kosong'
+        ]);
+       
+        // if (Auth::attempt($user)) {
+        //     $user = auth()->user();
+        
+        //     if ($user->role === 'admin') {
+        //         return redirect()->route('dashboardAdmin'); // Redirect ke dashboard admin.
+        //     } elseif ($user->role === 'user') {
+        //         return redirect()->route('dashboardUser'); // Redirect ke dashboard pengguna.
+        //     }
+        // }
+
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password
+        ]);
+
+        return redirect('/register');
     }
+
+   
 }

@@ -3,6 +3,9 @@
 use App\Http\Controllers\TesController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\userController;
+use App\Http\Controllers\adminController;
+
 // use App\Http\Controllers\Homecontroller;
 // use App\Http\Controllers\Authcontroller;
 /*
@@ -17,21 +20,25 @@ use Illuminate\Support\Facades\Auth;
 */
 
 
-Auth::routes(['verify'=>true]);
+// Auth::routes(['verify'=>true]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('verified');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('verified');
 
-// Route::get('/login', [Authcontroller::class, 'login']);
-
-// Route::get('/register', [Authcontroller::class, 'register']);
-
-Route::get('register1', function(){
-    return view('register1');
+Route::middleware('cekAdmin')->group(function () {
+    Route::get('dashboardAdmin', [adminController::class, 'dashboardAdmin'])->name('dashboardAdmin');
 });
 
-// admin
-Route::middleware(['CekRole:admin'])->group(function () {
-    Route::get('/', function(){
-        return view('home');
-    });
+Route::middleware(['userMiddleware'])->group(function () {
+    Route::get('dashboardUser', [UserController::class, 'dashboardUser'])->name('dashboardUser');
 });
+
+Route::middleware(['guest'])->group(function () {
+
+Route::resource('user', UserController::class);
+Route::get('/', [UserController::class, 'dashboard'])->name('dashboard');
+Route::get('register', [Usercontroller::class, 'register'])->name('register');
+Route::get('login', [Usercontroller::class, 'index'])->name('index');
+Route::post('authenticatelogin', [Usercontroller::class, 'authenticatelogin'])->name('authenticatelogin');
+Route::post('authenticate', [UserController::class, 'authenticate'])->name('authenticate');
+});
+
