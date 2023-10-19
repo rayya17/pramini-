@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Auth;
 
 class userController extends Controller
 {
+    public function dashboardUser(){
+        return view ('Dashboarduser.daftarmenu');
+    }
+
     public function index()
     {
         $User = User::all();

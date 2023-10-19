@@ -28,7 +28,7 @@ Route::middleware('cekAdmin')->group(function () {
     Route::get('dashboardAdmin', [adminController::class, 'dashboardAdmin'])->name('dashboardAdmin');
 });
 
-Route::middleware(['userMiddleware'])->group(function () {
+Route::middleware('UserMiddleware')->group(function () {
     Route::get('dashboardUser', [UserController::class, 'dashboardUser'])->name('dashboardUser');
 });
 
