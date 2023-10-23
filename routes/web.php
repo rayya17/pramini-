@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\adminController;
+use App\Http\Controllers\KamarController;
 
 // use App\Http\Controllers\Homecontroller;
 // use App\Http\Controllers\Authcontroller;
@@ -26,19 +27,19 @@ use App\Http\Controllers\adminController;
 
 Route::middleware('cekAdmin')->group(function () {
     Route::get('dashboardAdmin', [adminController::class, 'dashboardAdmin'])->name('dashboardAdmin');
+    Route::resource('kamar', KamarController::class);
 });
 
 Route::middleware('UserMiddleware')->group(function () {
     Route::get('dashboardUser', [UserController::class, 'dashboardUser'])->name('dashboardUser');
 });
 
-Route::middleware(['guest'])->group(function () {
-
 Route::resource('user', UserController::class);
-Route::get('/', [UserController::class, 'dashboard'])->name('dashboard');
-Route::get('register', [Usercontroller::class, 'register'])->name('register');
-Route::get('login', [Usercontroller::class, 'index'])->name('index');
-Route::post('authenticatelogin', [Usercontroller::class, 'authenticatelogin'])->name('authenticatelogin');
-Route::post('authenticate', [UserController::class, 'authenticate'])->name('authenticate');
-});
 
+Route::middleware(['guest'])->group(function () {
+    Route::get('/', [UserController::class, 'dashboard'])->name('dashboard');
+    Route::get('register', [Usercontroller::class, 'register'])->name('register');
+    Route::get('login', [Usercontroller::class, 'index'])->name('index');
+    Route::post('authenticatelogin', [Usercontroller::class, 'authenticatelogin'])->name('authenticatelogin');
+    Route::post('authenticate', [UserController::class, 'authenticate'])->name('authenticate');
+});
