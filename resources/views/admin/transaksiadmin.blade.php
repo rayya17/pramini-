@@ -37,10 +37,61 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    @include('alert')
 </head>
 
 <body id="page-top">
+<!-- modal tambah pembayaran -->
+<form action="{{ route('pembayaranadmin.store') }}" method="POST" enctype="multipart/form-data">
+    @csrf
+    <div class="modal fade" id="myModal" tabindex="-1">
+          <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title">Tambah Metode Pembayaran</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body text-capitalize">
+                      <div class="mb-3">
+                          <label for="kelas" class="form-label fw-bold">metode pembayaran</label>
+                          <select name="metodepembayaran" id="selectMetode" class="form-control">
+                              <option value="" class="dropdown-menu" disabled selected>Pilih Metode Pembayaran
+                              </option>
+                              <option value="bank" data-target="bankInput">Bank</option>
+                          </select>
+                      </div>
+                      <div class="" value="bank" id="bankInput" style="display: none;">
+                          <div class="mb-3">
+                              <label for="kelas" class="form-label fw-bold">tujuan</label>
+                              <input type="text" name="tujuan" id="tujuan-bank" class="form-control"
+                                  value="{{ old('tujuan') }}">
+                              @if ($errors->has('keterangan_bank'))
+                                  <span class="text-tujuan">{{ $errors->first('tujuan') }}</span>
+                              @endif
+                          </div>
+                          <div class="mb-3">
+                              <label for="kelas" class="form-label fw-bold">Nomor Rekening</label>
+                              <input type="number" name="keterangan" id="keterangan" class="form-control"
+                                  value="{{ old('keterangan') }}">
+                              @if ($errors->has('keterangan'))
+                                  <span class="text-danger">{{ $errors->first('keterangan') }}</span>
+                              @endif
+                          </div>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
+                      <button type="submit" class="btn btn-primary">Simpan</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+</form>
+ <!-- end modal -->
 
+  <!-- Modal Edit Metode Pembayaran -->
+  
     <!-- Page Wrapper -->
     <div id="wrapper">
         @yield('sidebar')
@@ -260,8 +311,16 @@
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Settings
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Activity Log
+                                </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="" data-toggle="modal"
+                                <a class="dropdown-item" href="/logout" data-toggle="modal"
                                     data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
@@ -279,116 +338,89 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Transaksi</h1>
                     </div>
 
 
                      <!-- Content Row -->
                      <div class="row">
-
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Kamar Tersedia</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Kamar Terpakai</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-info shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks
-                                            </div>
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="progress progress-sm mr-2">
-                                                        <div class="progress-bar bg-info" role="progressbar"
-                                                            style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Pending Requests Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Pending Requests</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Content Row -->
-
-                    @yield('content')
-
-
+                     <div class="content-inner mt-3 py-0">
+            <div class="card border-0 shadow rounded">
+                <div class="card-body">
+                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                        data-bs-target="#myModal">Tambah Transaksi</button>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No.</th>
+                                    <th scope="col">metode pembayaran</th>
+                                    <th scope="col">tujuan</th>
+                                    <th scope="col">keterangan</th>
+                                    <th scope="col">aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $no = 1;
+                                @endphp
+                                @foreach ($adminmp as $a)
+                                    <tr>
+                                        <th scope="row">{{ $no++ }}</th>
+                                        <td>{{ $a->metodepembayaran }}</td>
+                                        <td>{{ $a->tujuan }}</td>
+                                        <td>{{ $a->keterangan }}</td>
+                                        <td>
+                                        <div class="d-flex">
+                                            <button type="submit" class="btn btn-outline-warning edit-btn" data-target="modal fade" data-id="#edit{{ $a->id }}"><i
+                                                    class="bi bi-pencil-square"></i></button>
+                                            <form action="{{ route('adestroy', $a->id) }}" method="post"
+                                            id="delete-form{{ $a->id }}">
+                                            @method('DELETE')
+                                            @csrf
+                                                <button type="submit" class="btn btn-outline-danger delete-btn ms-1" onclick="hapus(event)" data-id="{{$a->id}}" data-nama="{{$a->id}}"><i
+                                                class="bi bi-trash-fill"></i></button>
+                                            </form>
+                                        </td>
+                                    </tr>  
+                                @endforeach
+                            </tbody>
+                        </table>
                 </div>
+            </div>
+        </div>
+    </div>
+                                               <script>
+                                                    function hapus(event) {
+                                                        Swal.fire({
+                                                            title: 'Apakah Anda Yakin?',
+                                                            text: 'Data akan terhapus selamanya!',
+                                                            icon: 'question',
+                                                            showCancelButton: true,
+                                                            confirmButtonText: 'Ya, Hapus',
+                                                            cancelButtonText: 'Batal',
+                                                            reverseButtons: true
+                                                        }).then((result) => {
+                                                            if (result.isConfirmed) {
+                                                                document.getElementById('delete-form' + id).submit();
+                                                            }
+                                                        });
+                                                    }
+                                                </script>
+                
+                                    @yield('content')
                 <!-- /.container-fluid -->
 
             </div>
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
+            <!-- <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
                         <span>Copyright &copy; Website 2023</span>
                     </div>
                 </div>
-            </footer>
+            </footer> -->
             <!-- End of Footer -->
 
         </div>
@@ -410,7 +442,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
+                        <span aria-hidden="true"></span>
                     </button>
                 </div>
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
@@ -438,6 +470,21 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const selectMetode = document.getElementById('selectMetode');
+        const bankInput = document.getElementById('bankInput');
+
+        selectMetode.addEventListener('change', function () {
+            if (selectMetode.value === 'bank') {
+                bankInput.style.display = 'block';
+            } else {
+                bankInput.style.display = 'none';
+            }
+        });
+    });
+</script>
+
 
 </body>
 

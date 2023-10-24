@@ -29,13 +29,18 @@ Route::middleware('cekAdmin')->group(function () {
     Route::get('dashboardAdmin', [adminController::class, 'dashboardAdmin'])->name('dashboardAdmin');
     Route::get('transaksiAdmin', [adminController::class, 'transaksiAdmin'])->name('transaksiAdmin');
     Route::resource('pembayaranadmin', App\Http\Controllers\adminController::class);
+    Route::get('aedit/{id}/edit', [adminController::class, 'aedit'])->name('aedit');
+    Route::put('aupdate/{id}', [adminController::class, 'aupdate'])->name('aupdate');
+    Route::delete('adestroy/{adminmp}', [adminController::class, 'adestroy'])->name('adestroy');
     Route::resource('kamar', KamarController::class);
 });
 
 Route::middleware('UserMiddleware')->group(function () {
     Route::get('dashboardUser', [dashuserController::class, 'dashboardUser'])->name('dashboardUser');
     Route::get('pesanan', [dashuserController::class, 'pesanan'])->name('pesanan');
-    Route::get('riwayatuser', [dashusercontroller::class, 'riwayatuser'])->name('riwayatuser');
+    Route::get('riwayatuser', [dashuserController::class, 'riwayatuser'])->name('riwayatuser');
+    Route::post('beli', [dashboardusercontroller::class, 'beli'])->name('beli');
+    Route::get('konfirmasiPemesanan/{ids}', [dashuserController::class, 'konfirmasiPemesanan'])->name('konfirmasiPemesanan');
 });
 
 Route::resource('user', UserController::class);
