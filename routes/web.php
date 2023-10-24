@@ -39,9 +39,11 @@ Route::middleware('UserMiddleware')->group(function () {
     Route::get('dashboardUser', [dashuserController::class, 'dashboardUser'])->name('dashboardUser');
     Route::get('pesanan', [dashuserController::class, 'pesanan'])->name('pesanan');
     Route::get('riwayatuser', [dashuserController::class, 'riwayatuser'])->name('riwayatuser');
-    Route::post('beli', [dashboardusercontroller::class, 'beli'])->name('beli');
-    Route::get('konfirmasiPemesanan/{ids}', [dashuserController::class, 'konfirmasiPemesanan'])->name('konfirmasiPemesanan');
-});
+    Route::post('beli', [dashuserController::class, 'beli'])->name('beli');
+    Route::get('pemesanan/{id}', [dashuserController::class, 'pemesanan'])->name('pemesanan')->middleware('web');
+    Route::resource('daftar' , App\Http\Controllers\dashuserController::class);
+    Route::get('search/{daftar}', [dashuserController::class, 'search'])->name('searching');
+    });
 
 Route::resource('user', UserController::class);
 Route::get('logout', [UserController::class, 'logout'])->name('logout');

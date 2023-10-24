@@ -116,19 +116,7 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small"
-                                placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                 
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -139,6 +127,10 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-search fa-fw"></i>
                             </a>
+                            <form action="{{ route('searching', ['daftar' => 'query']) }}" method="GET">
+                            <input type="text" class="form-control" name="query"
+                                value="{{ request('query') }}" placeholder="Cari...">
+                            </form>
                             <!-- Dropdown - Messages -->
                             <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
                                 aria-labelledby="searchDropdown">
@@ -260,63 +252,52 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <!-- <div class="container">
-                <div class="row row-cols-1 row-cols-md-3 g-4">
-                    <div class="col">
-                        <div class="card">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        </div>
-                        </div>
-                    </div>    
-                    </div>
-                    </div> -->
-                    @php
-            $no = 1;
-        @endphp
-        <div class="container">
-            <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 row-cols-xxl-4">
-                @foreach ($admin as $p)
-                <div class="col-xl-3 col-lg-3 col-md-6 col-12 dish-card-horizontal mt-2">
-                    <div class="col active" data-iq-gsap="onStart" data-iq-opacity="0" data-iq-position-y="-40"
-                        data-iq-duration=".6" data-iq-delay=".6" data-iq-trigger="scroll" data-iq-ease="none"
-                        style="transform: translate(0px, 0px); opacity: 1;">
-                        <div class="card card-white dish-card profile-img mb-5">
-                            <div class="profile-img21 d-flex justify-content-center align-items-center">
-                                <!-- tempat foto -->
-                                <img src="{{ asset('Storage/' . $p->foto) }}"
-                                    class="img-fluid avatar-170 position-bottom" alt="profile-image">
-                            </div>
-                            <!-- Menu muter muter Start -->
-                            <div class="card-body menu-image">
-                                <h6 class="heading-title fw-bolder mt-3 mb-0 text-center fs-5">
-                                    {{ $p->jenis_kamar }}</h6>
-                                    <h6 class="heading-title fw-bolder mt-3 mb-0 text-center fs-5">
-                                    {{ $p->no_kamar }}</h6>
-                                <div class="d-flex justify-content-evenly">
-                                    <p class="text-primary fw-bolder my-2">Rp.
-                                        {{ number_format($p->harga, 0, ',', '.') }}
-                                    </p>
-                                </div>
-                                <div class="d-flex justify-content-evenly">
-                                    <p class="text-primary fw-bolder my-2">
-                                        {{ $p->jumlah}}
-                                    </p>
-                                </div>
-                                <div class="d-flex justify-content-center gap-2 mt-3">
-                                    <!-- <a href="{{ route('pemesanan', ['id' => $p->id])}}" class="btn btn-primary"><i class="bi bi-bag-check"></i>pesan</a> -->
-                                    <a class="btn btn-primary"
-                                        href="{{ route('pemesanan', ['id' => $p->id])}}">Detail</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="container">
+    <div class="mt-4">
+        <h3 class="card-title">Detail</h3>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 mt-4">
+            <div class="card">
+                <div class="card-body">
+                    <img src="{{ asset('p/8HFFUAguMaw537yf49m2uBIzKOPglNhmDvwHooV9.png') }}" alt="" style="width:400px; height:450px;"/>
                 </div>
-                @endforeach
             </div>
-            
+        </div>
+        <div class="col-lg-6 mt-4">
+            <div class="card">
+                <div class="card-body">
+                    <!-- Isi card deskripsi di sini -->
+                    <h4 class="card-title">{{$kamar->jenis_kamar}}</h4>
+                    <p>Deskripsi menu yang panjang dan menjelaskan tentang menu ini. Anda dapat menambahkan semua informasi yang diperlukan di sini.</p>
+                    <p>Rp. {{ number_format($kamar->harga, 0, ',', '.')}} </p>
+                    <p>List Fasilitas</p>
+                    <input type="radio" id="pilihMenu" name="pilihanMenu" value="" style="display: none;">
+                    <div class="form-group">
+                          <label for="inputjumlah">Masuk</label>
+                          <input type="date" class="form-control" id="inputjumlah" name="jumlah">
+                        </div>
+                        <div class="form-group">
+                          <label for="inputharga">Keluar</label>
+                          <input type="date" class="form-control" id="inputharga" name="harga">
+                        </div>
+                        
+                        <div class="modal-footer">
+                          <button type="submit" class="btn btn-primary">Pesan</button>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+        
+
+
+                  
                 <!-- /.container-fluid -->
 
             </div>

@@ -21,25 +21,31 @@ class dashuserController extends Controller
         return view('Dashboarduser.pesanan');
     }
     
-        public function beli( Request $request)
-        {
-            return view('Dashboarduser.pemesanan');
-        }
-
-    public function konfimasipembelian(Request $request, $ids)
+    public function pemesanan(Request $request, $id)
     {
-        $orderIds = explode(',', $ids);
-        $pengguna = kamar::whereIn('id', $orderIds)->with('admin')->get();
+        $kamar = kamar::findOrFail($id);
 
-        $user_id = Auth::id();
-        $subtotalorder = $pengguna->sum('totalharga');
-
-        $bank = transaksiadmin::where('metodepembayaran', 'bank')->get();
-        return view('Dashboarduser.pemesanan', compact('pengguna', 'user_id', 'wallet', 'notifikasi', 'subtotalorder', 'bank'));
+        return view('Dashboarduser.detailpesanan', ['id' => $id], compact('kamar'));
     }
 
     public function riwayatuser()
     {
         return view('Dashboarduser.riwayat');
     }
+
+    public function search(Request $request, $daftar)
+    {
+        // Ambil kata kunci pencarian dari input form
+        $searchTerm = $request->input('query');
+        $user_id = Auth::id();
+    
+        // Melakukan pencarian data sesuai dengan $searchTerm
+        $results = kamar::where('jenis_kamar', 'like', '%' . $searchTerm . '%')
+            ->where('user_id', $user_id)
+            ->get();
+    
+        return view('Dashboarduser.daftarmenu', compact('results'));
+    }
+    
+
 }

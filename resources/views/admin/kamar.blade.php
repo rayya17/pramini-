@@ -52,9 +52,9 @@
                                   @csrf
                                   @method('PUT')
                                   <div class="form-group">
-                                    <label for="no">No</label>
-                                    <input type="number" class="form-control" id="no" name="no"
-                                      value="{{ $kamar->no }}">
+                                    <label for="no">No kamar</label>
+                                    <input type="number" class="form-control" id="no_kamar" name="no_kamar"
+                                      value="{{ $kamar->no_kamar }}">
                                       @error('no')
                                           <p class="text-danger">
                                             {{ $message }}
@@ -146,8 +146,8 @@
                         @csrf
                         <div class="form-group">
                           <label for="no">No</label>
-                          <input type="text" class="form-control" id="no" name="no">
-                          @error('no')
+                          <input type="text" class="form-control" id="no" name="no_kamar">
+                          @error('no_kamar')
                             <div class="alert alert-danger mt-2">
                               {{ $message }}
                             </div>

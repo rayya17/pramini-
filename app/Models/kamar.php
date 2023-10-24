@@ -10,10 +10,12 @@ class kamar extends Model
     use HasFactory;
 
     protected $fillable =[
-        'no',
+        'no_kamar',
         'foto',
         'jenis_kamar',
         'jumlah',
         'harga',
     ];
+
+
 }
