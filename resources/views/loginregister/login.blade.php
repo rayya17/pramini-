@@ -35,7 +35,7 @@
                             <input class="form-control" type="text" name="email" placeholder="E-mail Address" required>
                             <input class="form-control" type="password" name="password" placeholder="Password" required>
                             <div class="form-button">
-                                <button id="submit" type="submit" class="ibtn">Login</button> <a href="forget9.html">Forget password?</a>
+                                <button id="submit" type="submit" class="ibtn">Login</button>
                             </div>
                         </form>
                         <div class="other-links">
