@@ -117,10 +117,10 @@
                     </button>
 
                     <!-- Topbar Search -->
-                    <form
+                    <form action="" method=""
                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small"
+                            <input type="text" class="form-control bg-light border-0 small" name="" value=""
                                 placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="button">
@@ -280,9 +280,6 @@
             <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 row-cols-xxl-4">
                 @foreach ($admin as $p)
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12 dish-card-horizontal mt-2">
-                    <div class="col active" data-iq-gsap="onStart" data-iq-opacity="0" data-iq-position-y="-40"
-                        data-iq-duration=".6" data-iq-delay=".6" data-iq-trigger="scroll" data-iq-ease="none"
-                        style="transform: translate(0px, 0px); opacity: 1;">
                         <div class="card card-white dish-card profile-img mb-5">
                             <div class="profile-img21 d-flex justify-content-center align-items-center">
                                 <!-- tempat foto -->
@@ -312,7 +309,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </div>
                 @endforeach
             </div>

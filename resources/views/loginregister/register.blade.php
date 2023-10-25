@@ -17,7 +17,7 @@
             <div class="img-holder">
                 <div class="bg"></div>
                 <div class="info-holder">
-                    <h3>Get more things done with Loggin platform.</h3>
+                    <h3></h3>
                     <p></p>
                     <img src="images/graphic5.svg" alt="">
                 </div>
