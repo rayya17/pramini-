@@ -36,8 +36,8 @@
                       <td class="text-center"><img src="{{ asset('storage/' . $kamar->foto) }}" class="rounded"
                           style="width:150px"></td>
                       <td>{{ $kamar->jenis_kamar }}</td>
-                     <td>{{ $kamar->deskripsi }}</td>
-                     <td>{{Str::limit ($kamar->fasilitas, 10) }}</td>
+                      <td>{{Str::limit ($kamar->deskripsi, 10) }}</td>
+                     <td>{{ $kamar->fasilitas }}</td>
                       <td>{{ 'RP ' . number_format($kamar->harga, 0, ',', '.') }}</td>
                       <td>
                         {{-- tombol edit modal --}}
@@ -75,14 +75,14 @@
                                   </div>
                                   <div class="form-group">
                                     <label for="deskripsi">Deskripsi</label>
-                                    <input type="text" class="form-control" id="deskripsi" name="deskripsi"
-                                      value="{{ $kamar->deskripsi }}">
-                                      @error('deskripsi')
-                                          <p class="text-danger">
-                                            {{ $message }}
-                                          </p>
-                                          @enderror
+                                    <textarea class="form-control" id="deskripsi" name="deskripsi">{{ $kamar->deskripsi }}</textarea>
+                                    @error('deskripsi')
+                                      <p class="text-danger">
+                                        {{ $message }}
+                                      </p>
+                                    @enderror
                                   </div>
+
                                   <div class="form-group">
                                     <label for="fasilitas">Fasilitas</label>
                                     <input type="text" class="form-control" id="fasilitas" name="fasilitas"
@@ -185,7 +185,7 @@
                         </div>
                         <div class="form-group">
                           <label for="inputdeskripsi">Deskripsi</label>
-                          <input type="text" class="form-control" id="inputdeskripsi" name="deskripsi">
+                          <textarea class="form-control" id="inputdeskripsi" name="deskripsi"></textarea>
                           @error('deskripsi')
                             <div class="alert alert-danger mt-2">
                               {{ $message }}
