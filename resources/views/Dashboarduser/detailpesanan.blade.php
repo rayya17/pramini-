@@ -97,7 +97,7 @@
                     </li>
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
-   
+
 
         </ul>
         <!-- End of Sidebar -->
@@ -116,7 +116,7 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                 
+
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -201,14 +201,14 @@
                                     Alerts</a>
                             </div>
                         </li>
-                        
+
 
                         <div class="topbar-divider d-none d-sm-block"></div>
             <!-- Start Profile-->
             <li class="nav-item dropdown">
                                 <a class="nav-link py-0 d-flex align-items-center" href="#" id="userDropdown"
                                     role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                   
+
                                     <div class="caption ms-3 d-none d-md-block ">
                                         <h6 class="mb-0 caption-title">{{ Auth::user()->name }}</h6>
                                     </div>
@@ -259,8 +259,10 @@
     <div class="row">
         <div class="col-lg-6 mt-4">
             <div class="card">
-                <div class="card-body">
-                    <img src="{{ asset('p/8HFFUAguMaw537yf49m2uBIzKOPglNhmDvwHooV9.png') }}" alt="" style="width:400px; height:450px;"/>
+                <div class="profile-img21 d-flex justify-content-center align-items-center">
+                    <!-- tempat foto -->
+                    <img src="{{ asset('Storage/' . $kamar->foto) }}"
+                        class="img-fluid avatar-170 position-bottom" alt="profile-image">
                 </div>
             </div>
         </div>
@@ -281,7 +283,7 @@
                           <label for="inputharga">Keluar</label>
                           <input type="date" class="form-control" id="inputharga" name="harga">
                         </div>
-                        
+
                         <div class="modal-footer">
                           <button type="submit" class="btn btn-primary">Pesan</button>
                         </div>
@@ -294,10 +296,10 @@
 
 
 
-        
 
 
-                  
+
+
                 <!-- /.container-fluid -->
 
             </div>

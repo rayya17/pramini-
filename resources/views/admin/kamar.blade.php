@@ -32,11 +32,12 @@
                 <tbody>
                   @forelse ($kamars as $kamar)
                     <tr>
-                      <td>{{ $kamar->no }}</td>
+                      <td>{{ $kamar->no_kamar }}</td>
                       <td class="text-center"><img src="{{ asset('storage/' . $kamar->foto) }}" class="rounded"
                           style="width:150px"></td>
                       <td>{{ $kamar->jenis_kamar }}</td>
-                      <td></td>
+                     <td>{{ $kamar->deskripsi }}</td>
+                     <td>{{Str::limit ($kamar->fasilitas, 10) }}</td>
                       <td>{{ 'RP ' . number_format($kamar->harga, 0, ',', '.') }}</td>
                       <td>
                         {{-- tombol edit modal --}}
@@ -184,7 +185,7 @@
                         </div>
                         <div class="form-group">
                           <label for="inputdeskripsi">Deskripsi</label>
-                          <input type="number" class="form-control" id="inputdeskripsi" name="deskripsi">
+                          <input type="text" class="form-control" id="inputdeskripsi" name="deskripsi">
                           @error('deskripsi')
                             <div class="alert alert-danger mt-2">
                               {{ $message }}
@@ -193,7 +194,7 @@
                         </div>
                         <div class="form-group">
                           <label for="fasilitas">Fasilitas</label>
-                          <input type="number" class="form-control" id="fasilitas" name="fasilitas">
+                          <input type="text" class="form-control" id="fasilitas" name="fasilitas">
                           @error('fasilitas')
                             <div class="alert alert-danger mt-2">
                               {{ $message }}
@@ -202,7 +203,7 @@
                         </div>
                         <div class="form-group">
                           <label for="inputharga">Harga</label>
-                          <input type="text" class="form-control" id="inputharga" name="harga">
+                          <input type="number" class="form-control" id="inputharga" name="harga">
                           @error('harga')
                             <div class="alert alert-danger mt-2">
                               {{ $message }}
