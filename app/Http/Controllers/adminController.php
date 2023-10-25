@@ -4,11 +4,18 @@ namespace App\Http\Controllers;
 use App\Models\transaksiadmin;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\pengguna;
+use App\Http\Requests\StorepenggunaRequest;
+use App\Http\Requests\UpdatepenggunaRequest;
+
+use function PHPUnit\Framework\returnCallback;
 
 class adminController extends Controller
 {
-    public function dashboardAdmin(){
-        return view ('admin.dashboardAdmin');
+    public function dashboard()
+    {
+        return view('admin.dashboard');
     }
 
     public function transaksiAdmin(){
@@ -99,5 +106,19 @@ public function aupdate(Request $request, $id)
     }
 }
 
+
+
+public function kepengguna()
+{
+    $penggunas = User::all();
+    return view('admin.pengguna', compact('penggunas'))->with('user');
+}
+
+public function index()
+{
+    $penggunas = pengguna::all();
+    return view('admin.pengguna', compact('penggunas'));
+
+}
 
 }
