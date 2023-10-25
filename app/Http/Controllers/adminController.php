@@ -108,7 +108,7 @@ public function aupdate(Request $request, $id)
 
 
 
-public function kepengguna()
+public function kepengguna()haha
 {
     $penggunas = User::all();
     return view('admin.pengguna', compact('penggunas'))->with('user');

@@ -34,7 +34,7 @@ Route::middleware('cekAdmin')->group(function () {
     Route::put('aupdate/{id}', [adminController::class, 'aupdate'])->name('aupdate');
     Route::delete('adestroy/{adminmp}', [adminController::class, 'adestroy'])->name('adestroy');
     Route::get('dashboard', [adminController::class, 'dashboard'])->name('dashboard');
-    Route::get('kepengguna', [adminController::class, 'kepengguna'])->name('kepengguna');
+    Route::get('kepengguna', [adminController::class, 'kepengguna'])->name('kepengguna');haha
     Route::resource('kamar', KamarController::class);
 });
 

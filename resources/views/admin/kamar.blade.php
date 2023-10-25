@@ -23,7 +23,8 @@
                     <th scope="col">No</th>
                     <th scope="col">Foto</th>
                     <th scope="col">Jenis Kamar</th>
-                    <th scope="col">Jumlah</th>
+                    <th scope="col">Deskripsi</th>
+                    <th scope="col">Fasilitas</th>
                     <th scope="col">Harga</th>
                     <th scope="col">Aksi</th>
                   </tr>
@@ -35,7 +36,7 @@
                       <td class="text-center"><img src="{{ asset('storage/' . $kamar->foto) }}" class="rounded"
                           style="width:150px"></td>
                       <td>{{ $kamar->jenis_kamar }}</td>
-                      <td>{{ $kamar->jumlah }} </td>
+                      <td></td>
                       <td>{{ 'RP ' . number_format($kamar->harga, 0, ',', '.') }}</td>
                       <td>
                         {{-- tombol edit modal --}}
@@ -72,10 +73,20 @@
                                       @enderror
                                   </div>
                                   <div class="form-group">
-                                    <label for="jumlah">Jumlah</label>
-                                    <input type="number" class="form-control" id="jumlah" name="jumlah"
-                                      value="{{ $kamar->jumlah }}">
-                                      @error('jumlah')
+                                    <label for="deskripsi">Deskripsi</label>
+                                    <input type="text" class="form-control" id="deskripsi" name="deskripsi"
+                                      value="{{ $kamar->deskripsi }}">
+                                      @error('deskripsi')
+                                          <p class="text-danger">
+                                            {{ $message }}
+                                          </p>
+                                          @enderror
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="fasilitas">Fasilitas</label>
+                                    <input type="text" class="form-control" id="fasilitas" name="fasilitas"
+                                      value="{{ $kamar->fasilitas }}">
+                                      @error('fasilitas')
                                           <p class="text-danger">
                                             {{ $message }}
                                           </p>
@@ -172,9 +183,18 @@
                           @enderror
                         </div>
                         <div class="form-group">
-                          <label for="inputjumlah">Jumlah</label>
-                          <input type="number" class="form-control" id="inputjumlah" name="jumlah">
-                          @error('jumlah')
+                          <label for="inputdeskripsi">Deskripsi</label>
+                          <input type="number" class="form-control" id="inputdeskripsi" name="deskripsi">
+                          @error('deskripsi')
+                            <div class="alert alert-danger mt-2">
+                              {{ $message }}
+                            </div>
+                          @enderror
+                        </div>
+                        <div class="form-group">
+                          <label for="fasilitas">Fasilitas</label>
+                          <input type="number" class="form-control" id="fasilitas" name="fasilitas">
+                          @error('fasilitas')
                             <div class="alert alert-danger mt-2">
                               {{ $message }}
                             </div>

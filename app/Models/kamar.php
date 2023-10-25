@@ -13,7 +13,8 @@ class kamar extends Model
         'no_kamar',
         'foto',
         'jenis_kamar',
-        'jumlah',
+        'deskripsi',
+        'fasilitas',
         'harga',
     ];
 
