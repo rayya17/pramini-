@@ -7,6 +7,7 @@ use App\Http\Controllers\userController;
 use App\Http\Controllers\adminController;
 use App\Http\Controllers\KamarController;
 use App\Http\Controllers\dashuserController;
+use App\Http\Controllers\bookingController;
 // use App\Http\Controllers\Homecontroller;
 // use App\Http\Controllers\Authcontroller;
 /*
@@ -27,7 +28,8 @@ use App\Http\Controllers\dashuserController;
 
 // Route Admin
 Route::middleware('cekAdmin')->group(function () {
-    // Route::get('dashboard', [adminController::class, 'dashboard'])->name('dashboard');
+    Route::patch('terima/{id}', [adminController::class, 'terima'])->name('admin.terima');
+    Route::patch('tolak/{id}', [adminController::class, 'tolak'])->name('admin.tolak');
     Route::get('transaksiAdmin', [adminController::class, 'transaksiAdmin'])->name('transaksiAdmin');
     Route::resource('pembayaranadmin', App\Http\Controllers\adminController::class);
     Route::get('aedit/{id}/edit', [adminController::class, 'aedit'])->name('aedit');
@@ -35,6 +37,8 @@ Route::middleware('cekAdmin')->group(function () {
     Route::delete('adestroy/{adminmp}', [adminController::class, 'adestroy'])->name('adestroy');
     Route::get('dashboard', [adminController::class, 'dashboard'])->name('dashboard');
     Route::get('kepengguna', [adminController::class, 'kepengguna'])->name('kepengguna');
+    Route::patch('terima/{id}', [adminController::class, 'terima'])->name('admin.terima');
+    Route::patch('tolak/{id}', [adminController::class, 'tolak'])->name('admin.tolak');
     Route::resource('kamar', KamarController::class);
 });
 
@@ -43,10 +47,10 @@ Route::middleware('UserMiddleware')->group(function () {
     Route::get('dashboardUser', [dashuserController::class, 'dashboardUser'])->name('dashboardUser');
     Route::get('pesanan', [dashuserController::class, 'pesanan'])->name('pesanan');
     Route::get('riwayatuser', [dashuserController::class, 'riwayatuser'])->name('riwayatuser');
-    Route::post('beli', [dashuserController::class, 'beli'])->name('beli');
-    Route::get('pemesanan/{id}', [dashuserController::class, 'pemesanan'])->name('pemesanan')->middleware('web');
     Route::resource('daftar' , App\Http\Controllers\dashuserController::class);
     Route::get('search/{daftar}', [dashuserController::class, 'search'])->name('searching');
+    Route::get('pemesanan/{id}', [dashuserController::class, 'pemesanan'])->name('pemesanan')->middleware('web');
+    Route::post('booking', [dashuserController::class, 'booking'])->name('booking');
     });
 
 Route::resource('user', UserController::class);

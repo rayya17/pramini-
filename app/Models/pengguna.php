@@ -15,7 +15,10 @@ class pengguna extends Model
         'user_id',
         'no_telp',
         'alamat',
-        'no_ktp',
+        'ktp',
+        'checkin_date', 
+        'checkout_date', 
+        'status'
     ];
 
     public function User(): BelongsTo

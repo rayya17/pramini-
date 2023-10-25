@@ -46,6 +46,30 @@ class dashuserController extends Controller
     
         return view('Dashboarduser.daftarmenu', compact('results'));
     }
-    
 
+   public function booking(Request $request)
+{
+    $user = Auth::id();
+    $admin = kamar::all();
+    $kamar = Kamar::all()->first();
+
+    if (!$kamar) {
+        return view('Dashboarduser.daftarmenu')->with('error', 'Kamar yang sesuai tidak ditemukan.');
+    }
+
+    $datapost = new pengguna();
+    $datapost->checkin_date = $request->checkin_date;
+    $datapost->checkout_date = $request->checkout_date;
+    $datapost->user_id= $user;
+    $datapost->kamar_id = $kamar->id;
+    $datapost->no_telp = $request->no_telp;
+    $datapost->alamat = $request->alamat;
+    $datapost->ktp = $request->ktp;
+     // Menggunakan kamar_id dari kamar yang sesuai
+    $datapost->save();
+
+    return view('Dashboarduser.daftarmenu', compact('admin'))->with('success', 'Kamar berhasil di booking.');
 }
+    
+}
+

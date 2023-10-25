@@ -17,7 +17,9 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade');
             $table->string('no_telp');
             $table->string('alamat');
-            $table->string('no_ktp');
+            $table->string('ktp');
+            $table->datetime('checkin_date'); 
+            $table->datetime('checkout_date');
             $table->timestamps();
         });
     }

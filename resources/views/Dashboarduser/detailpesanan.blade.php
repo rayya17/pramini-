@@ -262,7 +262,12 @@
                 <div class="profile-img21 d-flex justify-content-center align-items-center">
                     <!-- tempat foto -->
                     <img src="{{ asset('Storage/' . $kamar->foto) }}"
-                        class="img-fluid avatar-170 position-bottom" alt="profile-image">
+                    class="img-fluid avatar-170 position-bottom" alt="profile-image">
+                </div>
+                <div>
+                    
+                    <p>{{$kamar->deskripsi}}</p>
+                    <p>Rp. {{ number_format($kamar->harga, 0, ',', '.')}} </p>
                 </div>
             </div>
         </div>
@@ -270,28 +275,48 @@
             <div class="card">
                 <div class="card-body">
                     <!-- Isi card deskripsi di sini -->
-                    <h4 class="card-title">{{$kamar->jenis_kamar}}</h4>
-                    <p>Deskripsi menu yang panjang dan menjelaskan tentang menu ini. Anda dapat menambahkan semua informasi yang diperlukan di sini.</p>
+                    <form method="POST" action="/booking">
+                        @csrf
+                        <h4 class="card-title">{{$kamar->jenis_kamar}}</h4>
+                        <p>{{$kamar->deskripsi}}</p>
                     <p>Rp. {{ number_format($kamar->harga, 0, ',', '.')}} </p>
-                    <p>List Fasilitas</p>
-                    <input type="radio" id="pilihMenu" name="pilihanMenu" value="" style="display: none;">
-                    <div class="form-group">
-                          <label for="inputjumlah">Masuk</label>
-                          <input type="date" class="form-control" id="inputjumlah" name="jumlah">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Masuk</label>
+                                <input type="date" name="checkin_date" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Keluar</label>
+                                <input type="date" name="checkout_date" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Telepon</label>
+                                <input type="number" name="no_telp" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>KTP</label>
+                                <input type="file" name="ktp" class="form-control">
+                            </div>
                         </div>
                         <div class="form-group">
-                          <label for="inputharga">Keluar</label>
-                          <input type="date" class="form-control" id="inputharga" name="harga">
+                          <label for="input">Alamat</label>
+                          <textarea name="alamat" class="form-control" placeholder="Masukkan Alamat Anda"></textarea>
                         </div>
 
                         <div class="modal-footer">
-                          <button type="submit" class="btn btn-primary">Pesan</button>
-                        </div>
-                    </div>
+                            <button type="submit" class="btn btn-primary">Booking</button>
+                        </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
 

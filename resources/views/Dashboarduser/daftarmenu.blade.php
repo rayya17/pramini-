@@ -303,8 +303,8 @@
                                     </p>
                                 </div>
                                 <div class="d-flex justify-content-center gap-2 mt-3">
-                                    <!-- <a href="{{ route('pemesanan', ['id' => $p->id])}}" class="btn btn-primary"><i class="bi bi-bag-check"></i>pesan</a> -->
-                                    <a class="btn btn-primary"
+                                    
+                                <a class="btn btn-primary"
                                         href="{{ route('pemesanan', ['id' => $p->id])}}">Detail</a>
                                 </div>
                             </div>
