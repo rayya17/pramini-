@@ -27,14 +27,14 @@ use App\Http\Controllers\dashuserController;
 
 // Route Admin
 Route::middleware('cekAdmin')->group(function () {
-    Route::get('dashboard', [adminController::class, 'dashboard'])->name('dashboard');
+    // Route::get('dashboard', [adminController::class, 'dashboard'])->name('dashboard');
     Route::get('transaksiAdmin', [adminController::class, 'transaksiAdmin'])->name('transaksiAdmin');
     Route::resource('pembayaranadmin', App\Http\Controllers\adminController::class);
     Route::get('aedit/{id}/edit', [adminController::class, 'aedit'])->name('aedit');
     Route::put('aupdate/{id}', [adminController::class, 'aupdate'])->name('aupdate');
     Route::delete('adestroy/{adminmp}', [adminController::class, 'adestroy'])->name('adestroy');
     Route::get('dashboard', [adminController::class, 'dashboard'])->name('dashboard');
-    Route::get('kepengguna', [adminController::class, 'kepengguna'])->name('kepengguna');haha
+    Route::get('kepengguna', [adminController::class, 'kepengguna'])->name('kepengguna');
     Route::resource('kamar', KamarController::class);
 });
 
