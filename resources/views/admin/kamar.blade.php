@@ -24,7 +24,6 @@
                     <th scope="col">Foto</th>
                     <th scope="col">Jenis Kamar</th>
                     <th scope="col">Deskripsi</th>
-                    <th scope="col">Fasilitas</th>
                     <th scope="col">Harga</th>
                     <th scope="col">Aksi</th>
                   </tr>
@@ -37,7 +36,6 @@
                           style="width:150px"></td>
                       <td>{{ $kamar->jenis_kamar }}</td>
                       <td>{{Str::limit ($kamar->deskripsi, 10) }}</td>
-                     <td>{{ $kamar->fasilitas }}</td>
                       <td>{{ 'RP ' . number_format($kamar->harga, 0, ',', '.') }}</td>
                       <td>
                         {{-- tombol edit modal --}}
@@ -82,16 +80,6 @@
                                       </p>
                                     @enderror
                                   </div>
-
-                                  <div class="form-group">
-                                    <label for="fasilitas">Fasilitas</label>
-                                    <input type="text" class="form-control" id="fasilitas" name="fasilitas"
-                                      value="{{ $kamar->fasilitas }}">
-                                      @error('fasilitas')
-                                          <p class="text-danger">
-                                            {{ $message }}
-                                          </p>
-                                          @enderror
                                   </div>
                                   <div class="form-group">
                                     <label for="harga">Harga</label>
@@ -187,15 +175,6 @@
                           <label for="inputdeskripsi">Deskripsi</label>
                           <textarea class="form-control" id="inputdeskripsi" name="deskripsi"></textarea>
                           @error('deskripsi')
-                            <div class="alert alert-danger mt-2">
-                              {{ $message }}
-                            </div>
-                          @enderror
-                        </div>
-                        <div class="form-group">
-                          <label for="fasilitas">Fasilitas</label>
-                          <input type="text" class="form-control" id="fasilitas" name="fasilitas">
-                          @error('fasilitas')
                             <div class="alert alert-danger mt-2">
                               {{ $message }}
                             </div>

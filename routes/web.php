@@ -8,6 +8,8 @@ use App\Http\Controllers\adminController;
 use App\Http\Controllers\KamarController;
 use App\Http\Controllers\dashuserController;
 use App\Http\Controllers\bookingController;
+use App\Http\Controllers\PenggunaController;
+
 // use App\Http\Controllers\Homecontroller;
 // use App\Http\Controllers\Authcontroller;
 /*
@@ -37,9 +39,9 @@ Route::middleware('cekAdmin')->group(function () {
     Route::delete('adestroy/{adminmp}', [adminController::class, 'adestroy'])->name('adestroy');
     Route::get('dashboard', [adminController::class, 'dashboard'])->name('dashboard');
     Route::get('kepengguna', [adminController::class, 'kepengguna'])->name('kepengguna');
-    Route::patch('terima/{id}', [adminController::class, 'terima'])->name('admin.terima');
-    Route::patch('tolak/{id}', [adminController::class, 'tolak'])->name('admin.tolak');
     Route::resource('kamar', KamarController::class);
+    Route::patch('terimapesanan',[PenggunaController::class ,'terima']);
+    Route::patch('tolakpesanan',[PenggunaController::class ,'tolak']);
 });
 
 // Route User

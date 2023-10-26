@@ -9,14 +9,8 @@ class kamar extends Model
 {
     use HasFactory;
 
-    protected $fillable =[
-        'no_kamar',
-        'foto',
-        'jenis_kamar',
-        'deskripsi',
-        'fasilitas',
-        'harga',
+    protected $guarded = [
+        'id'
     ];
-
 
 }

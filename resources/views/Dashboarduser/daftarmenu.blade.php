@@ -97,7 +97,7 @@
                     </li>
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
-   
+
 
         </ul>
         <!-- End of Sidebar -->
@@ -209,14 +209,14 @@
                                     Alerts</a>
                             </div>
                         </li>
-                        
+
 
                         <div class="topbar-divider d-none d-sm-block"></div>
             <!-- Start Profile-->
             <li class="nav-item dropdown">
                                 <a class="nav-link py-0 d-flex align-items-center" href="#" id="userDropdown"
                                     role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                   
+
                                     <div class="caption ms-3 d-none d-md-block ">
                                         <h6 class="mb-0 caption-title">{{ Auth::user()->name }}</h6>
                                     </div>
@@ -270,7 +270,7 @@
                             <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                         </div>
                         </div>
-                    </div>    
+                    </div>
                     </div>
                     </div> -->
                     @php
@@ -283,8 +283,7 @@
                         <div class="card card-white dish-card profile-img mb-5">
                             <div class="profile-img21 d-flex justify-content-center align-items-center">
                                 <!-- tempat foto -->
-                                <img src="{{ asset('Storage/' . $p->foto) }}"
-                                    class="img-fluid avatar-170 position-bottom" alt="profile-image">
+                                <img src="{{ $p->foto }}" class="img-fluid avatar-170 position-bottom" alt="profile-image">
                             </div>
                             <!-- Menu muter muter Start -->
                             <div class="card-body menu-image">
@@ -303,7 +302,7 @@
                                     </p>
                                 </div>
                                 <div class="d-flex justify-content-center gap-2 mt-3">
-                                    
+
                                 <a class="btn btn-primary"
                                         href="{{ route('pemesanan', ['id' => $p->id])}}">Detail</a>
                                 </div>
@@ -312,7 +311,7 @@
                 </div>
                 @endforeach
             </div>
-            
+
                 <!-- /.container-fluid -->
 
             </div>

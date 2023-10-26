@@ -27,6 +27,7 @@
     <link href="{{ asset('startbootstrap/css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+@include('alert')
 
 
 </head>
@@ -264,11 +265,6 @@
                     <img src="{{ asset('Storage/' . $kamar->foto) }}"
                     class="img-fluid avatar-170 position-bottom" alt="profile-image">
                 </div>
-                <div>
-                    
-                    <p>{{$kamar->deskripsi}}</p>
-                    <p>Rp. {{ number_format($kamar->harga, 0, ',', '.')}} </p>
-                </div>
             </div>
         </div>
         <div class="col-lg-6 mt-4">
@@ -277,6 +273,7 @@
                     <!-- Isi card deskripsi di sini -->
                     <form method="POST" action="/booking">
                         @csrf
+                        <input type="hidden" value="{{ $kamar->id }}" name="id_kamar">
                         <h4 class="card-title">{{$kamar->jenis_kamar}}</h4>
                         <p>{{$kamar->deskripsi}}</p>
                     <p>Rp. {{ number_format($kamar->harga, 0, ',', '.')}} </p>

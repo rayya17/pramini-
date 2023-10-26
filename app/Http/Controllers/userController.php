@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class userController extends Controller
 {
-   
+
 
     public function index()
     {
@@ -39,7 +39,7 @@ class userController extends Controller
         User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => $request->password
+            'password' => Hash::make($user['password'])
         ]);
 
         return redirect('/login');
@@ -51,7 +51,7 @@ class userController extends Controller
             $user = Auth::user();
 
             if ($user->role === 'admin') {
-                return redirect('dashboardAdmin'); // Redirect ke dashboard admin.
+                return redirect('dashboard'); // Redirect ke dashboard admin.
             } else if ($user->role === 'user') {
                 return redirect()->route('dashboardUser'); // Redirect ke dashboard pengguna.
             }
@@ -92,7 +92,7 @@ class userController extends Controller
     public function logout()
 {
     Auth::logout();
-    return redirect()->route('user.index'); 
+    return redirect()->route('user.index');
 }
 
 }

@@ -63,4 +63,21 @@ class PenggunaController extends Controller
     {
         //
     }
+    public function terima(pengguna $pengguna)
+    {
+        $pengguna = pengguna::where('status','kosong');
+        $pengguna->update([
+            'status'=>'di isi'
+        ]);
+        return back();
+    }
+
+    public function tolak(pengguna $pengguna)
+    {
+        $pengguna = pengguna::where('status','kosong');
+        $pengguna->update([
+            'status'=>'di tolak'
+        ]);
+        return back();
+    }
 }

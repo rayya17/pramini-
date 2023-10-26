@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('foto')->nullable();
             $table->string('jenis_kamar');
             $table->string('deskripsi');
-            $table->string('fasilitas');
             $table->string('harga');
+            $table->foreignId('user_id')->nullable()->constrained('users')->onUpdate('cascade')->onDelete('restrict');
             $table->timestamps();
         });
     }

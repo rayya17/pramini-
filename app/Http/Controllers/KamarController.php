@@ -39,7 +39,6 @@ class KamarController extends Controller
             'jenis_kamar' => 'required',
             'harga' => 'required|gt:0',
             'deskripsi' => 'required',
-            'fasilitas' => 'required'
         ], [
             'no_kamar.gt' => 'nomor kamar tidak boleh min',
             'no_kamar.required' => 'nomor kamar tidak boleh kosong',
@@ -64,7 +63,6 @@ class KamarController extends Controller
             'foto' => $fileName,
             'jenis_kamar' => $request->jenis_kamar,
             'deskripsi' => $request->deskripsi,
-            'fasilitas' => $request->fasilitas,
             'harga' => $request->harga,
         ]);
 
@@ -100,7 +98,6 @@ class KamarController extends Controller
             'jenis_kamar' => 'required',
             'harga' => 'required|gt:0',
             'deskripsi' => 'required',
-            'fasilitas' => 'required'
         ], [
             'no_kamar.gt' => 'nomor kamar tidak boleh min',
             'no_kamar.required' => 'nomor kamar tidak boleh kosong',
@@ -109,7 +106,6 @@ class KamarController extends Controller
             'harga.gt' => 'harga tidak boleh min',
             'harga.required' => 'harga tidak boleh kosong',
             'deskripsi.required' => 'deskripsi tidak boleh kosong',
-            'fasilitas.required' => 'fasilitas tidak boleh kosong',
         ]);
 
         $fotokamar = 'kamar';
@@ -129,7 +125,6 @@ class KamarController extends Controller
         $kamar->no_kamar = $request->no_kamar;
         $kamar->jenis_kamar = $request->jenis_kamar;
         $kamar->deskripsi = $request->deskripsi;
-        $kamar->fasilitas = $request->fasilitas;
         $kamar->harga = $request->harga;
         $kamar->save();
 
