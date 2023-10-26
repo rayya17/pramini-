@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('deskripsi');
             $table->string('harga');
             $table->foreignId('user_id')->nullable()->constrained('users')->onUpdate('cascade')->onDelete('restrict');
+            $table->string('status')->default('kosong');
             $table->timestamps();
         });
     }

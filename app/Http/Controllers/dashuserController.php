@@ -59,19 +59,40 @@ class dashuserController extends Controller
     }
 
     public function booking(Request $request)
+{
+    $kamar = Kamar::where('id', $request->id_kamar)->first();
+    $user_id = Auth::id();
+
+    $kamar->update([
+        'status' => 'booked',
+        'user_id' => $user_id
+    ]);
+
+    // Mengambil nilai kamar_id dari $kamar
+    $kamar_id = $kamar->id;
+
+    // Menyimpan data ke tabel penggunas
+    Pengguna::create([
+        'kamar_id' => $kamar_id,
+        'user_id' => $user_id,
+        'no_telp' => $request->no_telp,
+        'status' => 'menunggu',
+        'alamat' => $request->alamat,
+        'ktp' => $request->ktp,
+        'checkin_date' => $request->checkin_date,
+        'checkout_date' => $request->checkout_date,
+    ]);
+
+    return redirect()->route('dashboardUser');
+}
+
+    public function bookingtolak(kamar $kamar, Request $request)
     {
-        $kamar = Kamar::where('id', $request->id_kamar)->first();
-
-        if ($kamar->user_id) {
-            return back()->with('error', 'Kamar ini sudah di booking.');
-        }
-
-        if (!$kamar) {
-            return view('Dashboarduser.daftarmenu')->with('error', 'Kamar yang sesuai tidak ditemukan.');
-        }
+        $kamar = Kamar::where('status', 'kosong');
 
         Kamar::findOrFail($kamar->id)->update([
             'user_id' => Auth::id(),
+            'status' => 'booked',
         ]);
 
         $datapost = new pengguna();
@@ -81,18 +102,8 @@ class dashuserController extends Controller
         $datapost->kamar_id = $kamar->id;
         $datapost->no_telp = $request->no_telp;
         $datapost->alamat = $request->alamat;
+        $datapost->ktp = $request->ktp;
         $datapost->save();
-
-        $dirktp = 'ktp';
-
-        if ($request->hasFile('ktp')) { // Memeriksa apakah ada file foto yang diunggah
-            $foto = $request->file('ktp');
-            $fileName = $foto->storeAs($dirktp, $foto->hashName());
-
-            $datapost->ktp = $fileName;
-
-        return redirect()->back()->with('success', "Berhasil mem-booking kamar ini");
+        return back();
     }
-}
-
 }

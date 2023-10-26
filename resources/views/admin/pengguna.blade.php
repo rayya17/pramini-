@@ -39,19 +39,38 @@
                     <img src="{{ asset('storage/' . $user->ktp) }}" class="rounded" style="width:150px">
                   </td>
                   <td>
-                    <form action="/terimapesanan" method="POST">
-                        @method('PATCH')
-                      @csrf
-                      <input type="hidden" name="id_pengguna" value="{{ $user->id }}">
-                      <button type="submit" class="btn btn-success">Terima</button>
-                    </form>
-                    <form action="/tolakpesanan" method="POST">
-                        @method('PATCH')
-                        @csrf
-                        <input type="hidden" name="id_pengguna" value="{{ $user->id }}">
-                      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tolak</button>
-                    </form>
-                  </td>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal{{ $user->id }}">
+                        Buka Modal
+                    </button>
+
+                    <div class="modal fade" id="modal{{ $user->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Modal {{ $user->id }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Isi modal di sini...</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <form action="/terimapesanan" method="POST">
+                                        @method('PATCH')
+                                        @csrf
+                                        <input type="hidden" name="id_pengguna" value="{{ $user->id }}">
+                                        <button type="submit" class="btn btn-success">Terima</button>
+                                    </form>
+                                    <form action="/tolakpesanan" method="POST">
+                                        @method('PATCH')
+                                        @csrf
+                                        <input type="hidden" name="id_pengguna" value="{{ $user->id }}">
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tolak</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
                 </tr>
               @empty
               @endforelse
