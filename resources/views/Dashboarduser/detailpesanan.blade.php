@@ -277,34 +277,84 @@
                         <h4 class="card-title">{{$kamar->jenis_kamar}}</h4>
                         <p>{{$kamar->deskripsi}}</p>
                     <p>Rp. {{ number_format($kamar->harga, 0, ',', '.')}} </p>
-                    <div class="row">
+                    <d class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Masuk</label>
                                 <input type="date" name="checkin_date" class="form-control">
+                                @if ($errors->has('checkin_date'))
+                                    <span class="text-danger">{{ $errors->first('checkin_date') }}</span>
+                                 @endif
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Keluar</label>
                                 <input type="date" name="checkout_date" class="form-control">
+                                @if ($errors->has('checkout_date'))
+                                    <span class="text-danger">{{ $errors->first('checkout_date') }}</span>
+                                 @endif
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Telepon</label>
                                 <input type="number" name="no_telp" class="form-control">
+                                @if ($errors->has('no_telp'))
+                                    <span class="text-danger">{{ $errors->first('no_telp') }}</span>
+                                 @endif
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>KTP</label>
                                 <input type="file" name="ktp" class="form-control">
+                                @if ($errors->has('ktp'))
+                                    <span class="text-danger">{{ $errors->first('ktp') }}</span>
+                                 @endif
                             </div>
                         </div>
                         <div class="form-group">
                           <label for="input">Alamat</label>
                           <textarea name="alamat" class="form-control" placeholder="Masukkan Alamat Anda"></textarea>
+                          @if ($errors->has('alamat'))
+                                    <span class="text-danger">{{ $errors->first('alamat') }}</span>
+                                 @endif
+                        </div>
+                       
+                        <div class="form-group">
+                        <label for="input">Pilih jenis bank</label>
+                        <select name="tujuanpembayaran" class="form-control" id="jenis_bank_select">
+                        @foreach ($transaksi as $data)
+                            <option value="{{ $data->id }}" {{ $data->id === old('tujuan
+                                ') ? 'selected' : '' }}>
+                                {{ $data->tujuan }}</option>
+                        @endforeach
+                        </select>
+                        @if ($errors->has('tujuanpembayaran'))
+                                    <span class="text-danger">{{ $errors->first('tujuanpembayaran') }}</span>
+                                 @endif
+                        </div>
+                        
+                        <div class="col-md-6">
+                        <div class="form-group">
+                        @foreach ($transaksi as $data)
+                        <div class="col-md-6 bank-input" id="bank-input-{{ $data->id }}" style="display: none;">
+                            <div class="form-group">
+                                <label for="input">No rekening {{ $data->keterangan }}</label>
+                                <input type="hidden" name="keterangan{{ $data->id }}" class="form-control">
+                            </div>
+                        </div>
+                    @endforeach
+                        </div>
+                            </div>
+                       
+                        <div class="form-group">
+                            <label class="text-bold">Masukkan Bukti Pembayaran Anda</label>
+                            <input type="file" name="fotobukti" class="form-control" id="foto">
+                            @if ($errors->has('fotobukti'))
+                                    <span class="text-danger">{{ $errors->first('fotobukti') }}</span>
+                                 @endif
                         </div>
 
                         <div class="modal-footer">
@@ -383,6 +433,21 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#jenis_bank_select').on('change', function() {
+            var selectedBankId = $(this).val();
+            
+            // Hide all bank input fields
+            $('.bank-input').hide();
+            
+            // Show the selected bank's input field
+            $('#bank-input-' + selectedBankId).show();
+        });
+    });
+</script>
+
 
 </body>
 

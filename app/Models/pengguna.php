@@ -14,6 +14,7 @@ class pengguna extends Model
         'kamar_id',
         'user_id',
         'no_telp',
+        'transaksiadmin_id',
         'alamat',
         'ktp',
         'checkin_date',
@@ -25,10 +26,15 @@ class pengguna extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-
-    public function admin(): BelongsTo
+    
+    public function kamar(): BelongsTo
     {
-        return $this->belongsTo(Admin::class, 'kamar_id');
+        return $this->belongsTo(kamar::class, 'kamar_id');
+    }
+
+    public function transaksi(): BelongsTo
+    {
+        return $this->belongsTo(transaksiadmin::class, 'transaksiadmin_id');
     }
 
 
