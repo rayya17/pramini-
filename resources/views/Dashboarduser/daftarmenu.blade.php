@@ -283,7 +283,8 @@
                         <div class="card card-white dish-card profile-img mb-5">
                             <div class="profile-img21 d-flex justify-content-center align-items-center">
                                 <!-- tempat foto -->
-                                <img src="{{ $p->foto }}" class="img-fluid avatar-170 position-bottom" alt="profile-image">
+                                <img src="{{ asset('storage/' . $p->foto) }}" class="rounded mt-3"
+                                      style="width:150px">
                             </div>
                             <!-- Menu muter muter Start -->
                             <div class="card-body menu-image">

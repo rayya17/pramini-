@@ -110,7 +110,7 @@ public function aupdate(Request $request, $id)
 
 public function kepengguna()
 {
-    $penggunas = User::all();
+    $penggunas = pengguna::with('user')->get();
     return view('admin.pengguna', compact('penggunas'))->with('user');
 }
 

@@ -53,7 +53,7 @@
                                   @method('PUT')
                                   <div class="form-group">
                                     <label for="no">No kamar</label>
-                                    <input type="number" class="form-control" id="no_kamar" name="no_kamar"
+                                    <input type="text" class="form-control" id="no_kamar" name="no_kamar"
                                       value="{{ $kamar->no_kamar }}">
                                       @error('no')
                                           <p class="text-danger">
@@ -63,7 +63,7 @@
                                   </div>
                                   <div class="form-group">
                                     <label for="jenis_kamar">Jenis Kamar</label>
-                                    <input type="text" class="form-control" id="jenis_kamar" name="jenis_kamar"
+                                    <input type="no" class="form-control" id="jenis_kamar" name="jenis_kamar"
                                       value="{{ $kamar->jenis_kamar }}">
                                       @error('jenis_kamar')
                                           <p class="text-danger">

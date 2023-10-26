@@ -81,9 +81,18 @@ class dashuserController extends Controller
         $datapost->kamar_id = $kamar->id;
         $datapost->no_telp = $request->no_telp;
         $datapost->alamat = $request->alamat;
-        $datapost->ktp = $request->ktp;
         $datapost->save();
+
+        $dirktp = 'ktp';
+
+        if ($request->hasFile('ktp')) { // Memeriksa apakah ada file foto yang diunggah
+            $foto = $request->file('ktp');
+            $fileName = $foto->storeAs($dirktp, $foto->hashName());
+
+            $datapost->ktp = $fileName;
 
         return redirect()->back()->with('success', "Berhasil mem-booking kamar ini");
     }
+}
+
 }

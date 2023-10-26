@@ -16,16 +16,16 @@ class pengguna extends Model
         'no_telp',
         'alamat',
         'ktp',
-        'checkin_date', 
-        'checkout_date', 
+        'checkin_date',
+        'checkout_date',
         'status'
     ];
 
-    public function User(): BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-    
+
     public function admin(): BelongsTo
     {
         return $this->belongsTo(Admin::class, 'kamar_id');
