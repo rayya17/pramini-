@@ -86,7 +86,21 @@ class dashuserController extends Controller
         'ktp' => $request->ktp,
         'checkin_date' => $request->checkin_date,
         'checkout_date' => $request->checkout_date,
+    ],[
+     'checkin_date.required' => 'Tanggal check-in wajib diisi.',
+    'checkout_date.required' => 'Tanggal check-out wajib diisi.',
+    'checkout_date.after' => 'Tanggal check-out harus setelah tanggal check-in.',
+    'no_telp.required' => 'Nomor telepon wajib diisi.',
+    'notlp.numeric'=> 'Nomor Telepon Harus Berupa Angka',
+    'notlp.regex'=> 'Format nomor telepon tidak valid.',
+    'notlp.digits_between' => 'Nomor Telepon harus memiliki panjang antara 10 hingga 12 digit.',
+    'alamat.required' => 'Alamat wajib diisi.',
+    'alamat.min'=>'alamat minimal 5 huruf',
+    'alamat.max'=>'alamat maksimal tidak melebihi 100 huruf',
+    'ktp.required' => 'Foto KTP wajib diUpload.',
+    'fotobukti.required'=> 'foto bukti wajib di Upload',
     ]);
+
 
     return back();
 }
