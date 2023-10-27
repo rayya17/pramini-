@@ -117,11 +117,11 @@
                     </button>
 
                     <!-- Topbar Search -->
-                    <form action="" method=""
+                    <form action="{{ route('searching') }}" method="GET"
                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" name="" value=""
-                                placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                            <input type="text" class="form-control bg-light border-0 small"  id="searchQuery" name="query" value=""
+                                placeholder="cari..." aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="button">
                                     <i class="fas fa-search fa-sm"></i>
@@ -278,7 +278,8 @@
         @endphp
         <div class="container">
             <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 row-cols-xxl-4">
-                @foreach ($admin as $p)
+            @if(isset($kamar))
+                @foreach ($kamar as $p)
                 <div class="col-xl-3 col-lg-3 col-md-6 col-12 dish-card-horizontal mt-2">
                         <div class="card card-white dish-card profile-img mb-5">
                             <div class="profile-img21 d-flex justify-content-center align-items-center">
@@ -311,11 +312,18 @@
                         </div>
                 </div>
                 @endforeach
+                @endif
             </div>
-
-                <!-- /.container-fluid -->
-
-            </div>
+            @if ($kamar->count() > 0)
+    <div class="text-center mt-3">
+        <!-- Tampilkan hasil pencarian -->
+    </div>
+@else
+    <div class="text-center mt-3">
+        <p>Tidak Ada Hasil</p>
+    </div>
+@endif
+</div>
             <!-- End of Main Content -->
 
             <!-- Footer -->
@@ -374,6 +382,25 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#searchForm').on('submit', function(e) {
+            e.preventDefault();
+
+            var query = $('#searchQuery').val();
+
+            $.ajax({
+                url: '{{ route('searching') }}',
+                type: 'GET',
+                data: { query: query },
+                success: function(data) {
+                    $('#searchResults').html(data);
+                }
+            });
+        });
+    });
+    </script>
 
 </body>
 

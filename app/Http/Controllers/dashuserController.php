@@ -15,8 +15,9 @@ class dashuserController extends Controller
     public function dashboardUser()
     {
         $user_id = Auth::id();
-        $admin = kamar::orderBy('created_at', 'desc')->paginate(8);
-        return view('Dashboarduser.daftarmenu', compact('user_id', 'admin'));
+        $pagination = kamar::paginate(4);
+        $kamar = kamar::orderBy('created_at', 'desc')->paginate(4);
+        return view('Dashboarduser.daftarmenu', compact('user_id', 'kamar', 'pagination'));
     }
 
     public function pesanan()
@@ -46,7 +47,7 @@ class dashuserController extends Controller
         return view('Dashboarduser.riwayat', compact('pengguna'))->with('kamar');
     }
 
-    public function search(Request $request, $daftar)
+    public function search(Request $request)
     {
         // Ambil kata kunci pencarian dari input form
         $searchTerm = $request->input('query');
@@ -56,9 +57,10 @@ class dashuserController extends Controller
         $results = kamar::where('jenis_kamar', 'like', '%' . $searchTerm . '%')
             ->where('user_id', $user_id)
             ->get();
-
-        return view('Dashboarduser.daftarmenu', compact('results'));
+    
+        return view('Dashboarduser.daftarmenu', compact('user_id', 'kamar'));
     }
+    
 
     public function booking(Request $request)
 {
@@ -72,6 +74,31 @@ class dashuserController extends Controller
 
     // Mengambil nilai kamar_id dari $kamar
     $kamar_id = $kamar->id;
+
+    // Validasi input 
+    $request->validate([
+        'checkin_date' => 'required|date',
+        'checkout_date' => 'required|date|after:checkin_date',
+        'no_telp' => 'required|numeric|regex:/^\d*$/|digits_between:10,12',
+        'alamat' => 'required|min:5|max:100',
+        'ktp' => 'required|string',
+        'transaksiadmin_id' => 'required',
+        'fotobukti'=> 'required',
+    ], [
+    'checkin_date.required' => 'Tanggal check-in wajib diisi.',
+    'checkout_date.required' => 'Tanggal check-out wajib diisi.',
+    'checkout_date.after' => 'Tanggal check-out harus setelah tanggal check-in.',
+    'no_telp.required' => 'Nomor telepon wajib diisi.',
+    'notlp.numeric'=> 'Nomor Telepon Harus Berupa Angka',
+    'notlp.regex'=> 'Format nomor telepon tidak valid.',
+    'notlp.digits_between' => 'Nomor Telepon harus memiliki panjang antara 10 hingga 12 digit.',
+    'alamat.required' => 'Alamat wajib diisi.',
+    'alamat.min'=>'alamat minimal 5 huruf',
+    'alamat.max'=>'alamat maksimal tidak melebihi 100 huruf',
+    'ktp.required' => 'Foto KTP wajib diUpload.',
+    'transaksiadmin_id.required'=> 'harus diisi',
+    'fotobukti.required'=> 'foto bukti wajib di Upload',
+]);
 
     // Menyimpan data ke tabel penggunas
     Pengguna::create([
