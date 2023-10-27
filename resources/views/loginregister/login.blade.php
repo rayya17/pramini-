@@ -28,12 +28,19 @@
                             </a>
                         </div>
                         <div class="page-links">
-                            <a href="user" class="active">Login</a><a href="register">Register</a>
+                            <a href="user" class="active">Masuk</a><a href="register">Daftar</a>
                         </div>
                         <form action="{{ route('authenticatelogin') }}" method="POST">
                             @csrf
-                            <input class="form-control" type="text" name="email" placeholder="E-mail Address" required>
-                            <input class="form-control" type="password" name="password" placeholder="Password" required>
+                            <input class="form-control" type="text" name="email" placeholder="Masukkan E-Mail Anda">
+                            @if ($errors->has('email'))
+                                    <span class="text-danger">{{ $errors->first('email') }}</span>
+                                 @endif
+                            <input class="form-control" type="password" name="password" placeholder="Masukkan Kata Sandi">
+                            @if ($errors->has('password'))
+                                    <span class="text-danger">{{ $errors->first('password') }}</span>
+                                 @endif
+                                
                             <div class="form-button">
                                 <button id="submit" type="submit" class="ibtn">Login</button>
                             </div>

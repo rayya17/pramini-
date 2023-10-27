@@ -34,10 +34,22 @@
                         </div>
                         <form action="{{ route('authenticate') }}" method="POST">
                         @csrf
-                            <input class="form-control" type="text" name="name" placeholder="Full Name" required>
-                            <input class="form-control" type="email" name="email" placeholder="E-mail Address" required>
-                            <input class="form-control" type="password" name="password" placeholder="Password" required>
-                            <input class="form-control" type="password" name="confirmpassword" placeholder="Konfirmasi Password" required>
+                            <input class="form-control" type="text" name="name" placeholder="Masukkan nama anda">
+                            @if ($errors->has('name'))
+                                    <span class="text-danger">{{ $errors->first('name') }}</span>
+                                 @endif
+                            <input class="form-control" type="email" name="email" placeholder="Masukkan Alamat Email Anda" >
+                            @if ($errors->has('email'))
+                                    <span class="text-danger">{{ $errors->first('email') }}</span>
+                                 @endif
+                            <input class="form-control" type="password" name="password" placeholder="Masukkan Kata Sandi" >
+                            @if ($errors->has('password'))
+                                    <span class="text-danger">{{ $errors->first('password') }}</span>
+                                 @endif
+                            <input class="form-control" type="password" name="confirmpassword" placeholder="Konfirmasi Password" >
+                            @if ($errors->has('confirmpassword'))
+                                    <span class="text-danger">{{ $errors->first('confirmpassword') }}</span>
+                                 @endif
                             <div class="form-button">
                                 <button id="submit" type="submit" class="ibtn">Register</button>
                             </div>
