@@ -12,7 +12,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>Pemesanan Hotel</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('startbootstrap/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -43,9 +43,8 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-6">Pemesanan Hotel</div>
             </a>
 
             <!-- Divider -->
@@ -57,7 +56,7 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                        <a class="nav-link "aria-current="page" href="dashboardUser">
+                        <a class="nav-link "aria-current="page" href="{{ route('dashboardUser') }}">
                             <i class="icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="23" height="30"
                                     viewBox="0 0 27 23" fill="none">
@@ -321,34 +320,27 @@
                                     <span class="text-danger">{{ $errors->first('alamat') }}</span>
                                  @endif
                         </div>
-                       
+
                         <div class="form-group">
                         <label for="input">Pilih jenis bank</label>
-                        <select name="tujuanpembayaran" class="form-control" id="jenis_bank_select">
+                        <select name="transaksiadmin_id" class="form-control" id="jenis_bank_select">
                         @foreach ($transaksi as $data)
-                            <option value="{{ $data->id }}" {{ $data->id === old('tujuan
-                                ') ? 'selected' : '' }}>
+                            <option value="{{ $data->id }}" >
                                 {{ $data->tujuan }}</option>
-                        @endforeach
+                            </div>
+                            @endforeach
                         </select>
-                        @if ($errors->has('tujuanpembayaran'))
-                                    <span class="text-danger">{{ $errors->first('tujuanpembayaran') }}</span>
-                                 @endif
-                        </div>
-                        
-                        <div class="col-md-6">
+
                         <div class="form-group">
-                        @foreach ($transaksi as $data)
-                        <div class="col-md-6 bank-input" id="bank-input-{{ $data->id }}" style="display: none;">
-                            <div class="form-group">
-                                <label for="input">No rekening {{ $data->keterangan }}</label>
-                                <input type="hidden" name="keterangan{{ $data->id }}" class="form-control">
-                            </div>
-                        </div>
-                    @endforeach
-                        </div>
-                            </div>
-                       
+                            <label for="input">Pilih jenis bank</label>
+                            <select name="transaksiadmin_id" class="form-control" id="jenis_bank_select">
+                            @foreach ($transaksi as $data)
+                                <option value="{{ $data->id }}" >
+                                    {{ $data->keterangan }}</option>
+                                </div>
+                                @endforeach
+                            </select>
+
                         <div class="form-group">
                             <label class="text-bold">Masukkan Bukti Pembayaran Anda</label>
                             <input type="file" name="fotobukti" class="form-control" id="foto">
@@ -438,10 +430,10 @@
     $(document).ready(function() {
         $('#jenis_bank_select').on('change', function() {
             var selectedBankId = $(this).val();
-            
+
             // Hide all bank input fields
             $('.bank-input').hide();
-            
+
             // Show the selected bank's input field
             $('#bank-input-' + selectedBankId).show();
         });

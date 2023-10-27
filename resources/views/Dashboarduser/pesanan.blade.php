@@ -39,9 +39,8 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">Pemesanan Hotel</div>
             </a>
 
             <!-- Divider -->
@@ -76,6 +75,16 @@
                                         fill="#ffffff" />
                                 </svg>
                             </i>
+            <li class="nav-item">
+                        <a class="nav-link " href="{{ route('dashboardUser') }}">
+                            <i class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="30"
+                                    viewBox="0 0 26 23" fill="none">
+                                    <path
+                                        d="M2.55044 0C1.13495 0 0 1.13495 0 2.55044V7.65133C0 9.06683 1.13495 10.2018 2.55044 10.2018H7.65133C9.06683 10.2018 10.2018 9.06683 10.2018 7.65133V2.55044C10.2018 1.13495 9.06683 0 7.65133 0M7.90637 1.91283L9.25811 3.25182L4.16997 8.28894L0.943664 5.03713L2.30815 3.69814L4.18273 5.59822M2.55044 12.7522C1.13495 12.7522 0 13.8872 0 15.3027V20.4035C0 21.819 1.13495 22.954 2.55044 22.954H7.65133C9.06683 22.954 10.2018 21.819 10.2018 20.4035V15.3027C10.2018 13.8872 9.06683 12.7522 7.65133 12.7522M2.55044 15.3027H7.65133V20.4035H2.55044M12.7522 2.55044H25.5044V5.10089H12.7522M12.7522 20.4035V17.8531H25.5044V20.4035M12.7522 10.2018H25.5044V12.7522H12.7522V10.2018Z"
+                                        fill="#ffffff" />
+                                </svg>
+                            </i>
                             <span class="item-name">Pesanan</span>
                         </a>
                     </li>
@@ -94,7 +103,7 @@
                     </li>
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
-   
+
 
         </ul>
         <!-- End of Sidebar -->
@@ -204,14 +213,14 @@
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
                             </div>
                         </li>
-                        
+
 
                         <div class="topbar-divider d-none d-sm-block"></div>
             <!-- Start Profile-->
             <li class="nav-item dropdown">
                                 <a class="nav-link py-0 d-flex align-items-center" href="#" id="userDropdown"
                                     role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                   
+
                                     <div class="caption ms-3 d-none d-md-block ">
                                         <h6 class="mb-0 caption-title">{{ Auth::user()->name }}</h6>
                                     </div>
@@ -272,7 +281,7 @@
                         </div>
                     </div>
                 </div>
-            
+
                 <!-- /.container-fluid -->
 
             </div>

@@ -22,9 +22,6 @@ return new class extends Migration
             $table->string('ktp');
             $table->datetime('checkin_date');
             $table->datetime('checkout_date');
-            $table->string('metodepembayaran');
-            $table->string('tujuanpembayaran');
-            // $table->string('keteranganpembayaran');
             $table->string('fotobukti');
             $table->timestamps();
         });

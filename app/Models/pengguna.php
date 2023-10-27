@@ -17,6 +17,7 @@ class pengguna extends Model
         'transaksiadmin_id',
         'alamat',
         'ktp',
+        'fotobukti',
         'checkin_date',
         'checkout_date',
         'status'
@@ -26,7 +27,7 @@ class pengguna extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-    
+
     public function kamar(): BelongsTo
     {
         return $this->belongsTo(kamar::class, 'kamar_id');

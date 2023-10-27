@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\pengguna;
 use App\Http\Requests\StorepenggunaRequest;
 use App\Http\Requests\UpdatepenggunaRequest;
+use Illuminate\Http\Request;
+
 
 class PenggunaController extends Controller
 {
@@ -63,21 +65,21 @@ class PenggunaController extends Controller
     {
         //
     }
-    public function terima(pengguna $pengguna)
+    public function terima(pengguna $pengguna, Request $request)
     {
-        $pengguna = pengguna::where('status','kosong');
-        $pengguna->update([
-            'status'=>'di isi'
+        Pengguna::findOrFail($request->id_pengguna)->update([
+            'status' => 'terima',
         ]);
+
         return back();
     }
 
-    public function tolak(pengguna $pengguna)
+    public function tolak(pengguna $pengguna, Request $request)
     {
-        $pengguna = pengguna::where('status','kosong');
-        $pengguna->update([
-            'status'=>'di tolak'
+        Pengguna::findOrFail($request->id_pengguna)->update([
+            'status' => 'tolak',
         ]);
+
         return back();
     }
 }

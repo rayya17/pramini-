@@ -80,9 +80,8 @@
                                       </p>
                                     @enderror
                                   </div>
-                                  </div>
                                   <div class="form-group">
-                                    <label for="harga">Harga</label>
+                                      <label for="harga">Harga</label>
                                     <input type="number" class="form-control" id="harga" name="harga"
                                       value="{{ $kamar->harga }}">
                                       @error('harga')
@@ -98,16 +97,17 @@
                                     <img src="{{ asset('storage/' . $kamar->foto) }}" class="rounded mt-3"
                                       style="width:150px">
                                       @error('foto')
-                                          <p class="text-danger">
-                                            {{ $message }}
-                                          </p>
-                                          @enderror
-                                  </div>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                      <p class="text-danger">
+                                          {{ $message }}
+                                        </p>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                                 <button type="submit" class="btn btn-primary">Simpan</button>
-                              </div>
+                                </div>
+                            </div>
                             </div>
                           </div>
                         </div>

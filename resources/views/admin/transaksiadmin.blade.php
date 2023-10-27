@@ -360,7 +360,7 @@
                                 @php
                                     $no = 1;
                                 @endphp
-                                @foreach ($adminmp as $a)
+                                @foreach ($adminmp as $ a)
                                     <tr>
                                         <th scope="row">{{ $no++ }}</th>
                                         <td>{{ $a->metodepembayaran }}</td>

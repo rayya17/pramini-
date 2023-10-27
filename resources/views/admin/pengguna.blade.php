@@ -40,7 +40,7 @@
                   </td>
                   <td>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal{{ $user->id }}">
-                        Buka Modal
+                        Detail
                     </button>
 
                     <div class="modal fade" id="modal{{ $user->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -51,7 +51,14 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Isi modal di sini...</p>
+                                    <p>Nama Bank</p>
+                                    <p>{{ $user->transaksi->tujuan }}</p>
+                                    <p>Nomor Rekening</p>
+                                    <p>{{ $user->transaksi->keterangan }}</p>
+                                    <p>Bukti Rekening</p>
+                                    <span>
+                                        <img src="{{ asset('storage/kamar/' . $user->fotobukti) }}" alt="" srcset="">
+                                    </span>
                                 </div>
                                 <div class="modal-footer">
                                     <form action="/terimapesanan" method="POST">
