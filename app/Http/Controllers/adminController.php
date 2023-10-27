@@ -29,6 +29,7 @@ class adminController extends Controller
             'metodepembayaran' => 'required',
             'tujuan' => 'required',
             'keterangan' => 'required',
+
         ], [
             'metodepembayaran.required' => 'Metode pembayaran wajib dipilih.',
             'tujuan.required' => 'Tujuan wajib diisi.',
@@ -113,6 +114,7 @@ public function kepengguna()
     $penggunas = pengguna::with('user')
     ->where('status', 'menunggu')
     ->get();
+    
     return view('admin.pengguna', compact('penggunas'))->with('user');
 }
 
