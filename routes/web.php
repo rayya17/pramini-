@@ -31,7 +31,6 @@ use App\Http\Controllers\mailController;
 
 // Route Admin
 Route::middleware('cekAdmin')->group(function () {
-    // Route::put('update/{id}', [adminController::class ,'update']);
     Route::resource('transaksiadminupdate' , adminController::class);
     Route::patch('terima/{id}', [adminController::class, 'terima'])->name('admin.terima');
     Route::patch('tolak/{id}', [adminController::class, 'tolak'])->name('admin.tolak');

@@ -70,33 +70,7 @@ class dashuserController extends Controller
             'user_id' => $user_id
         ]);
 
-        // Mengambil nilai kamar_id dari $kamar
         $kamar_id = $kamar->id;
-
-        // Validasi input
-        $request->validate([
-            'checkin_date' => 'required|date',
-            'checkout_date' => 'required|date|after:checkin_date',
-            'no_telp' => 'required|numeric|regex:/^\d*$/|digits_between:10,12',
-            'alamat' => 'required|min:5|max:100',
-            'ktp' => 'required',
-            'transaksiadmin_id' => 'required',
-            'fotobukti' => 'required',
-        ], [
-            'checkin_date.required' => 'Tanggal check-in wajib diisi.',
-            'checkout_date.required' => 'Tanggal check-out wajib diisi.',
-            'checkout_date.after' => 'Tanggal check-out harus setelah tanggal check-in.',
-            'no_telp.required' => 'Nomor telepon wajib diisi.',
-            'notlp.numeric' => 'Nomor Telepon Harus Berupa Angka',
-            'notlp.regex' => 'Format nomor telepon tidak valid.',
-            'notlp.digits_between' => 'Nomor Telepon harus memiliki panjang antara 10 hingga 12 digit.',
-            'alamat.required' => 'Alamat wajib diisi.',
-            'alamat.min' => 'alamat minimal 5 huruf',
-            'alamat.max' => 'alamat maksimal tidak melebihi 100 huruf',
-            'ktp.required' => 'Foto KTP wajib diUpload.',
-            'transaksiadmin_id.required' => 'harus diisi',
-            'fotobukti.required' => 'foto bukti wajib di Upload',
-        ]);
 
         $foto = $request->ktp;
         $fileName = $foto->storeAs('kamar', $foto->hashName());
