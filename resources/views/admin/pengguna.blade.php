@@ -57,7 +57,7 @@
                                     <p>{{ $user->transaksi->keterangan }}</p>
                                     <p>Bukti Rekening</p>
                                     <span>
-                                        <img src="{{ asset('storage/kamar/' . $user->fotobukti) }}" alt="" srcset="">
+                                        <img src="{{ asset('storage/kamar/' . $user->kamar) }}" alt="" srcset="">
                                     </span>
                                 </div>
                                 <div class="modal-footer">

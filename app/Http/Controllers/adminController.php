@@ -72,22 +72,8 @@ public function aedit($id)
     }
 }
 
-public function aupdate(Request $request, $id)
+public function update(Request $request, $id)
 {
-    try {
-        // Validate the request data
-        $request->validate([
-            'metodepembayaran' => 'required',
-            'tujuan' => 'required',
-            'keterangan' => 'required|numeric|unique:transaksiadmin,keterangan,' . $id,
-        ], [
-            'metodepembayaran.required' => 'Metode pembayaran wajib dipilih.',
-            'tujuan.required' => 'Tujuan pembayaran wajib diisi.',
-            'keterangan.required' => 'Keterangan wajib diisi.',
-            'keterangan.numeric' => 'Keterangan harus berupa angka.',
-            'keterangan.unique' => 'Keterangan sudah pernah digunakan.',
-        ]);
-
         // Find the 'transaksiadmin' record with the specified $id
         $adminmp = transaksiadmin::findOrFail($id);
 
@@ -101,10 +87,7 @@ public function aupdate(Request $request, $id)
 
         // Redirect to a route named 'transaksiAdmin' with a success message
         return redirect()->route('transaksiAdmin')->with('success', 'Berhasil mengubah data');
-    } catch (\Exception $e) {
-        // Handle exceptions, for example, validation errors or record not found
-        return redirect()->route('transaksiAdmin')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
-    }
+
 }
 
 
@@ -114,7 +97,7 @@ public function kepengguna()
     $penggunas = pengguna::with('user')
     ->where('status', 'menunggu')
     ->get();
-    
+
     return view('admin.pengguna', compact('penggunas'))->with('user');
 }
 

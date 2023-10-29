@@ -38,7 +38,7 @@ class dashuserController extends Controller
         // $adminpm->status = 'menunggu';
         // $adminpm->save();
 
-        return view('Dashboarduser.detailpesanan', ['id' => $id], compact('kamar','transaksi'));
+        return view('Dashboarduser.detailpesanan', ['id' => $id], compact('kamar', 'transaksi'));
     }
 
     public function riwayatuser()
@@ -49,88 +49,90 @@ class dashuserController extends Controller
 
     public function search(Request $request)
     {
-        // Ambil kata kunci pencarian dari input form
         $searchTerm = $request->input('query');
         $user_id = Auth::id();
 
-        // Melakukan pencarian data sesuai dengan $searchTerm
-        $results = kamar::where('jenis_kamar', 'like', '%' . $searchTerm . '%')
+        $kamar = kamar::where('no_kamar', 'like', '%' . $searchTerm . '%')
             ->where('user_id', $user_id)
             ->get();
-    
+
         return view('Dashboarduser.daftarmenu', compact('user_id', 'kamar'));
     }
-    
+
 
     public function booking(Request $request)
-{
-    $kamar = Kamar::where('id', $request->id_kamar)->first();
-    $user_id = Auth::id();
+    {
+        $kamar = Kamar::where('id', $request->id_kamar)->first();
+        $user_id = Auth::id();
 
-    $kamar->update([
-        'status' => 'booked',
-        'user_id' => $user_id
-    ]);
+        $kamar->update([
+            'status' => 'booked',
+            'user_id' => $user_id
+        ]);
 
-    // Mengambil nilai kamar_id dari $kamar
-    $kamar_id = $kamar->id;
+        // Mengambil nilai kamar_id dari $kamar
+        $kamar_id = $kamar->id;
 
-    // Validasi input 
-    $request->validate([
-        'checkin_date' => 'required|date',
-        'checkout_date' => 'required|date|after:checkin_date',
-        'no_telp' => 'required|numeric|regex:/^\d*$/|digits_between:10,12',
-        'alamat' => 'required|min:5|max:100',
-        'ktp' => 'required|string',
-        'transaksiadmin_id' => 'required',
-        'fotobukti'=> 'required',
-    ], [
-    'checkin_date.required' => 'Tanggal check-in wajib diisi.',
-    'checkout_date.required' => 'Tanggal check-out wajib diisi.',
-    'checkout_date.after' => 'Tanggal check-out harus setelah tanggal check-in.',
-    'no_telp.required' => 'Nomor telepon wajib diisi.',
-    'notlp.numeric'=> 'Nomor Telepon Harus Berupa Angka',
-    'notlp.regex'=> 'Format nomor telepon tidak valid.',
-    'notlp.digits_between' => 'Nomor Telepon harus memiliki panjang antara 10 hingga 12 digit.',
-    'alamat.required' => 'Alamat wajib diisi.',
-    'alamat.min'=>'alamat minimal 5 huruf',
-    'alamat.max'=>'alamat maksimal tidak melebihi 100 huruf',
-    'ktp.required' => 'Foto KTP wajib diUpload.',
-    'transaksiadmin_id.required'=> 'harus diisi',
-    'fotobukti.required'=> 'foto bukti wajib di Upload',
-]);
+        // Validasi input
+        $request->validate([
+            'checkin_date' => 'required|date',
+            'checkout_date' => 'required|date|after:checkin_date',
+            'no_telp' => 'required|numeric|regex:/^\d*$/|digits_between:10,12',
+            'alamat' => 'required|min:5|max:100',
+            'ktp' => 'required',
+            'transaksiadmin_id' => 'required',
+            'fotobukti' => 'required',
+        ], [
+            'checkin_date.required' => 'Tanggal check-in wajib diisi.',
+            'checkout_date.required' => 'Tanggal check-out wajib diisi.',
+            'checkout_date.after' => 'Tanggal check-out harus setelah tanggal check-in.',
+            'no_telp.required' => 'Nomor telepon wajib diisi.',
+            'notlp.numeric' => 'Nomor Telepon Harus Berupa Angka',
+            'notlp.regex' => 'Format nomor telepon tidak valid.',
+            'notlp.digits_between' => 'Nomor Telepon harus memiliki panjang antara 10 hingga 12 digit.',
+            'alamat.required' => 'Alamat wajib diisi.',
+            'alamat.min' => 'alamat minimal 5 huruf',
+            'alamat.max' => 'alamat maksimal tidak melebihi 100 huruf',
+            'ktp.required' => 'Foto KTP wajib diUpload.',
+            'transaksiadmin_id.required' => 'harus diisi',
+            'fotobukti.required' => 'foto bukti wajib di Upload',
+        ]);
 
-    // Menyimpan data ke tabel penggunas
-    Pengguna::create([
-        'kamar_id' => $kamar_id,
-        'transaksiadmin_id' =>$request-> transaksiadmin_id,
-        'tujuanpembayaran' =>$request-> tujuanpembayaran,
-        'user_id' => $user_id,
-        'no_telp' => $request->no_telp,
-        'fotobukti' => $request->fotobukti,
-        'status' => 'menunggu',
-        'alamat' => $request->alamat,
-        'ktp' => $request->ktp,
-        'checkin_date' => $request->checkin_date,
-        'checkout_date' => $request->checkout_date,
-    ],[
-     'checkin_date.required' => 'Tanggal check-in wajib diisi.',
-    'checkout_date.required' => 'Tanggal check-out wajib diisi.',
-    'checkout_date.after' => 'Tanggal check-out harus setelah tanggal check-in.',
-    'no_telp.required' => 'Nomor telepon wajib diisi.',
-    'notlp.numeric'=> 'Nomor Telepon Harus Berupa Angka',
-    'notlp.regex'=> 'Format nomor telepon tidak valid.',
-    'notlp.digits_between' => 'Nomor Telepon harus memiliki panjang antara 10 hingga 12 digit.',
-    'alamat.required' => 'Alamat wajib diisi.',
-    'alamat.min'=>'alamat minimal 5 huruf',
-    'alamat.max'=>'alamat maksimal tidak melebihi 100 huruf',
-    'ktp.required' => 'Foto KTP wajib diUpload.',
-    'fotobukti.required'=> 'foto bukti wajib di Upload',
-    ]);
+        $foto = $request->ktp;
+        $fileName = $foto->storeAs('kamar', $foto->hashName());
+
+        // Menyimpan data ke tabel penggunas
+        Pengguna::create([
+            'kamar_id' => $kamar_id,
+            'transaksiadmin_id' => $request->transaksiadmin_id,
+            'tujuanpembayaran' => $request->tujuanpembayaran,
+            'user_id' => $user_id,
+            'no_telp' => $request->no_telp,
+            'fotobukti' => $request->fotobukti,
+            'status' => 'menunggu',
+            'alamat' => $request->alamat,
+            'ktp' => $fileName,
+            'checkin_date' => $request->checkin_date,
+            'checkout_date' => $request->checkout_date,
+        ], [
+            'checkin_date.required' => 'Tanggal check-in wajib diisi.',
+            'checkout_date.required' => 'Tanggal check-out wajib diisi.',
+            'checkout_date.after' => 'Tanggal check-out harus setelah tanggal check-in.',
+            'no_telp.required' => 'Nomor telepon wajib diisi.',
+            'notlp.numeric' => 'Nomor Telepon Harus Berupa Angka',
+            'notlp.regex' => 'Format nomor telepon tidak valid.',
+            'notlp.digits_between' => 'Nomor Telepon harus memiliki panjang antara 10 hingga 12 digit.',
+            'alamat.required' => 'Alamat wajib diisi.',
+            'alamat.min' => 'alamat minimal 5 huruf',
+            'alamat.max' => 'alamat maksimal tidak melebihi 100 huruf',
+            'ktp.required' => 'Foto KTP wajib diUpload.',
+            'transaksiadmin_id' => 'Harus di isi.',
+            'fotobukti.required' => 'foto bukti wajib di Upload',
+        ]);
 
 
-    return back();
-}
+        return back()->with('succes', 'kamar berhasil di booking');
+    }
 
     public function bookingtolak(kamar $kamar, Request $request)
     {

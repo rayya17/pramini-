@@ -270,7 +270,7 @@
             <div class="card">
                 <div class="card-body">
                     <!-- Isi card deskripsi di sini -->
-                    <form method="POST" action="/booking">
+                    <form method="POST" action="/booking" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" value="{{ $kamar->id }}" name="id_kamar">
                         <h4 class="card-title">{{$kamar->jenis_kamar}}</h4>
@@ -322,24 +322,31 @@
                         </div>
 
                         <div class="form-group">
-                        <label for="input">Pilih jenis bank</label>
-                        <select name="transaksiadmin_id" class="form-control" id="jenis_bank_select">
-                        @foreach ($transaksi as $data)
-                            <option value="{{ $data->id }}" >
-                                {{ $data->tujuan }}</option>
-                            </div>
-                            @endforeach
-                        </select>
-
-                        <div class="form-group">
                             <label for="input">Pilih jenis bank</label>
-                            <select name="transaksiadmin_id" class="form-control" id="jenis_bank_select">
+                            <select name="transaksiadmin_id" class="form-control" id="transaksiadmin_id">
                             @foreach ($transaksi as $data)
-                                <option value="{{ $data->id }}" >
-                                    {{ $data->keterangan }}</option>
-                                </div>
-                                @endforeach
+                                <option value="{{ $data->id }}" {{ $data->id === old('tujuan
+                                    ') ? 'selected' : '' }}>
+                                    {{ $data->tujuan }}</option>
+                            @endforeach
                             </select>
+                            @if ($errors->has('transaksiadmin_id'))
+                                        <span class="text-danger">{{ $errors->first('transaksiadmin_id') }}</span>
+                                     @endif
+                            </div>
+
+                            <div class="col-md-6">
+                            <div class="form-group">
+                            @foreach ($transaksi as $data)
+                            <div class="col-md-6 bank-input" id="bank-input-{{ $data->id }}" style="display: none;">
+                                <div class="form-group">
+                                    <label for="input">No rekening {{ $data->keterangan }}</label>
+                                    <input type="hidden" name="keterangan{{ $data->id }}" class="form-control">
+                                </div>
+                            </div>
+                        @endforeach
+                            </div>
+                                </div>
 
                         <div class="form-group">
                             <label class="text-bold">Masukkan Bukti Pembayaran Anda</label>
@@ -428,7 +435,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
-        $('#jenis_bank_select').on('change', function() {
+        $('#transaksiadmin_id').on('change', function() {
             var selectedBankId = $(this).val();
 
             // Hide all bank input fields
