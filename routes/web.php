@@ -53,6 +53,7 @@ Route::middleware('UserMiddleware')->group(function () {
     Route::get('search', [dashuserController::class, 'search'])->name('searching');
     Route::get('pemesanan/{id}', [dashuserController::class, 'pemesanan'])->name('pemesanan')->middleware('web');
     Route::post('booking', [dashuserController::class, 'booking'])->name('booking');
+    Route::post('ulasan/{id}', [dashuserController::class, 'ulasan'])->name('ulasan');
     });
 
 Route::resource('user', UserController::class);

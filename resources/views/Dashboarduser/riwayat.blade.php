@@ -64,18 +64,7 @@
         </a>
       </li>
 
-      <li class="nav-item">
-        <a class="nav-link " href="{{ route('pesanan') }}">
-          <i class="icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="30" viewBox="0 0 26 23" fill="none">
-              <path
-                d="M2.55044 0C1.13495 0 0 1.13495 0 2.55044V7.65133C0 9.06683 1.13495 10.2018 2.55044 10.2018H7.65133C9.06683 10.2018 10.2018 9.06683 10.2018 7.65133V2.55044C10.2018 1.13495 9.06683 0 7.65133 0M7.90637 1.91283L9.25811 3.25182L4.16997 8.28894L0.943664 5.03713L2.30815 3.69814L4.18273 5.59822M2.55044 12.7522C1.13495 12.7522 0 13.8872 0 15.3027V20.4035C0 21.819 1.13495 22.954 2.55044 22.954H7.65133C9.06683 22.954 10.2018 21.819 10.2018 20.4035V15.3027C10.2018 13.8872 9.06683 12.7522 7.65133 12.7522M2.55044 15.3027H7.65133V20.4035H2.55044M12.7522 2.55044H25.5044V5.10089H12.7522M12.7522 20.4035V17.8531H25.5044V20.4035M12.7522 10.2018H25.5044V12.7522H12.7522V10.2018Z"
-                fill="#ffffff" />
-            </svg>
-          </i>
-          <span class="item-name">Pesanan</span>
-        </a>
-      </li>
+     
       <li class="nav-item">
         <a class="nav-link " href="{{ route('riwayatuser') }}">
           <i class="icon">
@@ -109,18 +98,6 @@
             <i class="fa fa-bars"></i>
           </button>
 
-          <!-- Topbar Search -->
-          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-            <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                aria-label="Search" aria-describedby="basic-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                  <i class="fas fa-search fa-sm"></i>
-                </button>
-              </div>
-            </div>
-          </form>
 
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
@@ -148,58 +125,7 @@
               </div>
             </li>
 
-            <!-- Nav Item - Alerts -->
-            <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-bell fa-fw"></i>
-                <!-- Counter - Alerts -->
-                <span class="badge badge-danger badge-counter">3+</span>
-              </a>
-              <!-- Dropdown - Alerts -->
-              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                aria-labelledby="alertsDropdown">
-                <h6 class="dropdown-header">
-                  Alerts Center
-                </h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-primary">
-                      <i class="fas fa-file-alt text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 12, 2019</div>
-                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-success">
-                      <i class="fas fa-donate text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 7, 2019</div>
-                    $290.29 has been deposited into your account!
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-warning">
-                      <i class="fas fa-exclamation-triangle text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 2, 2019</div>
-                    Spending Alert: We've noticed unusually high spending for your account.
-                  </div>
-                </a>
-                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-              </div>
-            </li>
-
-
+           
             <div class="topbar-divider d-none d-sm-block"></div>
             <!-- Start Profile-->
             <li class="nav-item dropdown">
@@ -227,21 +153,41 @@
         <!-- Begin Page Content -->
         <div class="container">
           <div class="row row-cols-1 row-cols-md-3 g-4">
-            @forelse ($pengguna as $item)
+          @forelse ($pengguna as $item)
               <div class="col">
                 <div class="card">
-                  <img src="..." class="card-img-top" alt="...">
+                  <h5 class="card-text">{{$item->kamar->jenis_kamar}}</h5>
+                  <img src="{{ asset('Storage/' . $item->kamar->foto) }}" class="card-img-top" alt="...">
                   <div class="card-body">
-                    <h5 class="card-title">{{ $item->transaksi->tujuan }}</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                      additional content. This content is a little bit longer.</p>
+                  <div class="d-flex justify-content-between">
+                      <h6>No kamar :</h6>
+                      <a>{{$item->kamar->no_kamar}}</a>
+                    </div>
+                    <hr style="border-top: 1px solid ; margin: 10px 0;">
+                    <div class="d-flex justify-content-between">
+                      <h6>Check In :</h6>
+                      <a>{{ \Carbon\Carbon::parse($item->checkin_date)->format('d M Y') }}</a>
+                    </div>
+                    <hr style="border-top: 1px solid ; margin: 4px 0;">
+                    <div class="d-flex justify-content-between">
+                      <h6>Check Out :</h6>
+                      <a>{{ \Carbon\Carbon::parse($item->checkout_date)->format('d M Y') }}</a>
+                    </div>
+                    <hr style="border-top: 1px solid ; margin: 4px 0;">
+                    <div class="d-flex justify-content-between">
+                      <h6>Status :</h6>
+                      <a>{{$item->status}}</a>
+                    </div>
                   </div>
+                  <div class="btn btn-outline-primary text-capitalize"
+                      type="submit" id="modalUlasan" data-bs-toggle="modal" data-bs-target="#myModal-{{ $item->kamar_id }}" data-id="{{ $item->kamar_id }}" style=""> beri ulasan</div>
                 </div>
               </div>
-            @empty
-            @endforelse
+              @empty
+            @endforelse   
           </div>
         </div>
+
 
 
         <!-- /.container-fluid -->
@@ -269,25 +215,35 @@
     <i class="fas fa-angle-up"></i>
   </a>
 
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
-        </div>
+   <!-- Modal Ulasan-->
+   @foreach ($pengguna as $item)
+        <form action="{{ route('ulasan', ['id' => $item->kamar_id]) }}" method="POST" name="ulasan">
+            @csrf
+   <div class="modal" id="myModal-{{ $item->kamar_id }}" tabindex="-1" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Berikan Komentarmu!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <input type="hidden" name="kamar_id" value="{{ $item->kamar_id }}">
+      </div>
+      <div class="modal-body">
+      <label for="ulasan">Komentar</label>
+      <textarea name="komentar" class="form-control @error('komentar') is-invalid @enderror" value="{{ $item->komentar }}"></textarea>
+        @error('komentar')
+        <div class="invalid-feedback error-message">{{ $message }}</div>
+        @enderror                         
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">tutup</button>
+        <button type="submit" class="btn btn-primary">Kirim</button>
       </div>
     </div>
   </div>
+</div>
+</form>
+@endforeach
+
 
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
@@ -305,6 +261,16 @@
   <!-- Page level custom scripts -->
   <script src="js/demo/chart-area-demo.js"></script>
   <script src="js/demo/chart-pie-demo.js"></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const modalUlasan = document.getElementById("modalUlasan");
+    const myModal = new bootstrap.Modal(document.getElementById("{{$item->kamar_id}}"));
+  
+    modalUlasan.addEventListener("click", function () {
+      myModal.show();
+    });
+  });
+  </script>
 
 </body>
 
