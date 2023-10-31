@@ -8,6 +8,8 @@
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+
       @include('alert')
 
 
@@ -16,7 +18,7 @@
         <div class="col-md-12">
           <div class="card border-0 shadow rounded">
             <div class="card-body">
-              <a class="btn btn-md btn-success mb-3" data-bs-toggle="modal" data-bs-target="#tambah">TAMBAH</a>
+              <a class="btn btn-md btn-outline-primary mb-3" data-bs-toggle="modal" data-bs-target="#tambah">TAMBAH</a>
               <table class="table table-bordered">
                 <thead>
                   <tr>
@@ -38,6 +40,11 @@
                       <td>{{Str::limit ($kamar->deskripsi, 10) }}</td>
                       <td>{{ 'RP ' . number_format($kamar->harga, 0, ',', '.') }}</td>
                       <td>
+                      <div class="d-flex">
+                      <button class="btn btn-outline-warning" data-bs-toggle="modal" 
+                      data-bs-target="#edit{{ $kamar->id }}">
+                      <i class="bi bi-pencil-square"></i>
+                      </button>
                         {{-- tombol edit modal --}}
                         <div class="modal fade" id="edit{{ $kamar->id }}">
                           <div class="modal-dialog">
@@ -111,18 +118,19 @@
                             </div>
                           </div>
                         </div>
-                        </form>
-                        {{-- edit modal end --}}
+                      </form>
+                      {{-- edit modal end --}}
+                      <form action="{{ route('kamar.destroy', $kamar->id) }}" method="POST" id="delete-form-{{ $kamar->id }}">
+                        @csrf
+                        @method('DELETE')
+                        <button type="button" class="btn btn-outline-danger" onclick="hapus({{ $kamar->id }})">
+                          <i class="bi bi-trash-fill"></i> 
+                        </button>
+                      </form>
 
-                        <div class="d-flex gap-3">
-                          <button class="btn btn-warning" data-bs-toggle="modal"
-                            data-bs-target="#edit{{ $kamar->id }}">edit</button>
-                          <form action="{{ route('kamar.destroy', $kamar->id) }}" method="POST" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">hapus</button>
-                          </form>
-                        </div>
+                          
+                      </div>
+
                       </td>
                     </tr>
                   @empty
@@ -200,3 +208,20 @@
               </div>
               {{-- tutup modal tambah --}}
             @endsection
+            <script>
+  function hapus(id) {
+    Swal.fire({
+      title: 'Apakah Anda Yakin?',
+      text: 'Data akan terhapus selamanya!',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Ya, Hapus',
+      cancelButtonText: 'Batal',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        document.getElementById('delete-form-' + id).submit();
+      }
+    });
+  }
+</script>

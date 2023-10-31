@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\kamar;
+use App\Models\pengguna;
 use App\Http\Requests\StorekamarRequest;
 use App\Http\Requests\UpdatekamarRequest;
 use Illuminate\Support\Facades\Storage;
@@ -136,6 +137,11 @@ class KamarController extends Controller
      */
     public function destroy(kamar $kamar)
     {
+    $relatedPengguna = pengguna::where('kamar_id', $kamar->id)->get();
+
+    if (!$relatedPengguna->isEmpty()) {
+        return redirect()->back()->with('error', 'Data tidak dapat dihapus karena masih digunakan.');
+    }
         Storage::delete($kamar->foto);
         $kamar->delete();
         return redirect()->back()->with('success', "Berhasil menghapus data");
