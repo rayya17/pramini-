@@ -30,7 +30,7 @@
                             </a>
                         </div>
                         <div class="page-links">
-                            <a href="user">Login</a><a href="register" class="active">Register</a>
+                            <a href="user">Masuk</a><a href="register" class="active">Daftar</a>
                         </div>
                         <form action="{{ route('authenticate') }}" method="POST">
                         @csrf
