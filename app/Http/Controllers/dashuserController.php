@@ -64,13 +64,13 @@ class dashuserController extends Controller
 
     public function booking(Request $request)
     {
-        
-    // Validasi input 
+
+    // Validasi input
     $request->validate([
         'checkin_date' => 'required|date',
         'checkout_date' => 'required|date|after:checkin_date',
         'no_telp' => 'required|numeric|regex:/^\d*$/|digits_between:10,12',
-        'alamat' => 'required|min:5|max:100',
+        'alamat' => 'required|min:5|max:200',
         'ktp' => 'required',
         'fotobukti'=> 'required',
     ], [
@@ -83,7 +83,7 @@ class dashuserController extends Controller
     'notlp.digits_between' => 'Nomor Telepon harus memiliki panjang antara 10 hingga 12 digit.',
     'alamat.required' => 'Alamat wajib diisi.',
     'alamat.min'=>'alamat minimal 5 huruf',
-    'alamat.max'=>'alamat maksimal tidak melebihi 100 huruf',
+    'alamat.max'=>'alamat maksimal tidak melebihi 200 kalimat',
     'ktp.required' => 'Foto KTP wajib diUpload.',
     'fotobukti.required'=> 'foto bukti wajib di Upload',
 ]);
@@ -101,6 +101,9 @@ class dashuserController extends Controller
         $foto = $request->ktp;
         $fileName = $foto->storeAs('kamar', $foto->hashName());
 
+        $fotobukti = $request->fotobukti;
+        $file = $fotobukti->storeAs('kamar', $fotobukti->hashName());
+
         // Menyimpan data ke tabel penggunas
         Pengguna::create([
             'kamar_id' => $kamar_id,
@@ -108,17 +111,17 @@ class dashuserController extends Controller
             'tujuanpembayaran' => $request->tujuanpembayaran,
             'user_id' => $user_id,
             'no_telp' => $request->no_telp,
-            'fotobukti' => $request->fotobukti,
+            'fotobukti' => $file,
             'status' => 'menunggu',
             'alamat' => $request->alamat,
             'ktp' => $fileName,
             'checkin_date' => $request->checkin_date,
             'checkout_date' => $request->checkout_date,
-        
+
         ]);
 
 
-        return back()->with('succes', 'kamar berhasil di booking');
+        return back()->with('success', 'kamar berhasil di booking');
     }
 
     public function bookingtolak(kamar $kamar, Request $request)
@@ -149,7 +152,7 @@ class dashuserController extends Controller
         $user_id = Auth::user()->id;
         $admin = kamar::findOrFail($id);
         // $ulasan = ulasan::where('kamar_id', $admin->id)->get();
-        
+
         $request->validate([
             'kamar_id' => 'required',
             'komentar' => 'required|max:255',
@@ -158,14 +161,16 @@ class dashuserController extends Controller
             'komentar.required' => 'komentar tidak boleh kosong',
             'komentar.max' => 'komentar maaksimal hanya 255 karakter'
         ]);
-        
+
         $ulasan = new ulasan([
             'kamar_id' => $admin->id,
             'user_id' => $user_id,
             'komentar' => $request->komentar,
         ]);
         $ulasan->save();
-        
+
         return redirect()->back()->with('success', 'Ulasan berhasil disimpan');;
     }
+
+
 }

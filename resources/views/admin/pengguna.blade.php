@@ -47,18 +47,13 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Modal {{ $user->id }}</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel"> {{ $user->id }}</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Nama Bank</p>
-                                    <p>{{ $user->transaksi->tujuan }}</p>
-                                    <p>Nomor Rekening</p>
-                                    <p>{{ $user->transaksi->keterangan }}</p>
-                                    <p>Bukti Rekening</p>
-                                    <span>
-                                        <img src="{{ asset('storage/kamar/' . $user->kamar) }}" alt="" srcset="">
-                                    </span>
+                                    <p>Nama Bukti</p>
+
+                                    <img src="{{ asset('storage/' . $user->fotobukti) }}" class="rounded" style="width:150px">
                                 </div>
                                 <div class="modal-footer">
                                     <form action="/terimapesanan" method="POST">
