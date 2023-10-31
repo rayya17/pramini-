@@ -45,6 +45,7 @@
                       data-bs-target="#edit{{ $kamar->id }}">
                       <i class="bi bi-pencil-square"></i>
                       </button>
+      
                         {{-- tombol edit modal --}}
                         <div class="modal fade" id="edit{{ $kamar->id }}">
                           <div class="modal-dialog">
@@ -118,6 +119,7 @@
                             </div>
                           </div>
                         </div>
+                     
                       </form>
                       {{-- edit modal end --}}
                       <form action="{{ route('kamar.destroy', $kamar->id) }}" method="POST" id="delete-form-{{ $kamar->id }}">
@@ -128,9 +130,6 @@
                         </button>
                       </form>
 
-                          
-                      </div>
-
                       </td>
                     </tr>
                   @empty
@@ -140,6 +139,10 @@
                   @endforelse
                 </tbody>
               </table>
+              </div>
+            </div>
+        </div>
+   </div>
               {{-- tambah modal --}}
               <div class="modal fade" tabindex="-1" id="tambah" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
@@ -207,21 +210,22 @@
                 </div>
               </div>
               {{-- tutup modal tambah --}}
-            @endsection
-            <script>
-  function hapus(id) {
-    Swal.fire({
-      title: 'Apakah Anda Yakin?',
-      text: 'Data akan terhapus selamanya!',
-      icon: 'question',
-      showCancelButton: true,
-      confirmButtonText: 'Ya, Hapus',
-      cancelButtonText: 'Batal',
-      reverseButtons: true
-    }).then((result) => {
-      if (result.isConfirmed) {
-        document.getElementById('delete-form-' + id).submit();
-      }
-    });
-  }
-</script>
+              @endsection
+              <script>
+                function hapus(id) {
+                  Swal.fire({
+                    title: 'Apakah Anda Yakin?',
+                    text: 'Data akan terhapus selamanya!',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya, Hapus',
+                    cancelButtonText: 'Batal',
+                    reverseButtons: true
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      document.getElementById('delete-form-' + id).submit();
+                    }
+                  });
+                }
+              </script>
+     
