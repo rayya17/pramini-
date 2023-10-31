@@ -19,7 +19,7 @@
                 <div class="info-holder">
                     <h3></h3>
                     <p></p>
-                    <img src="images/graphic5.svg" alt="">
+                    <img src="{{ asset('assets/img/image 3.jpg') }}" style="border-radius: 15px;" alt="">
                 </div>
             </div>
             <div class="form-holder">

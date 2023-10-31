@@ -17,7 +17,7 @@
             <div class="img-holder">
                 <div class="bg"></div>
                 <div class="info-holder">
-                    <img src="images/graphic5.svg" alt="">
+                   <img src="{{ asset('assets/img/image 3.jpg') }}" style="border-radius: 15px;" alt="">
                 </div>
             </div>
             <div class="form-holder">
@@ -40,7 +40,7 @@
                             @if ($errors->has('password'))
                                     <span class="text-danger">{{ $errors->first('password') }}</span>
                                  @endif
-                                
+
                             <div class="form-button">
                                 <button id="submit" type="submit" class="ibtn">Login</button>
                             </div>
