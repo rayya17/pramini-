@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="css/fontawesome-all.min.css">
     <link rel="stylesheet" type="text/css" href="css/iofrm-style.css">
     <link rel="stylesheet" type="text/css" href="css/iofrm-theme9.css">
+    @include('alert')
 </head>
 <body>
     <div class="form-body">

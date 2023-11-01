@@ -15,7 +15,7 @@ class KamarController extends Controller
      */
     public function index()
     {
-        $kamars = kamar::all();
+        $kamars = kamar::orderBy('created_at', 'desc')->get();;
         return view('admin.kamar', compact('kamars'));
     }
 
@@ -35,7 +35,7 @@ class KamarController extends Controller
     public function store(StorekamarRequest $request)
     {
         $request->validate([
-            'no_kamar' => 'required|gt:0',
+            'no_kamar' => 'required|gt:0|unique:kamars',
             'foto' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'jenis_kamar' => 'required',
             'harga' => 'required|gt:0',
@@ -43,6 +43,7 @@ class KamarController extends Controller
         ], [
             'no_kamar.gt' => 'nomor kamar tidak boleh min',
             'no_kamar.required' => 'nomor kamar tidak boleh kosong',
+            'no_kamar.unique'=> 'nomor kamar tidak boleh sama',
             'foto.required' => 'foto tidak boleh kosong',
             'foto.mimes' => 'foto tidak valid',
             'jenis_kamar.required' => 'jenis kamar tidak boleh kosong',
@@ -94,14 +95,15 @@ class KamarController extends Controller
     public function update(UpdatekamarRequest $request, kamar $kamar)
     {
         $request->validate([
-            'no_kamar' => 'gt:0',
+            'no_kamar' => 'required|gt:0|unique:kamars',
             'foto' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048', // Mengubah 'required' menjadi 'nullable' agar foto tidak wajib diunggah saat mengedit
             'jenis_kamar' => 'required',
             'harga' => 'required|gt:0',
             'deskripsi' => 'required',
         ], [
-            'no_kamar.gt' => 'nomor kamar tidak boleh min',
             'no_kamar.required' => 'nomor kamar tidak boleh kosong',
+            'no_kamar.gt' => 'nomor kamar tidak boleh min',
+            'no_kamar.unique' => 'no kamar sudah pernah dipakai',
             'foto.mimes' => 'foto tidak valid',
             'jenis_kamar.required' => 'jenis kamar tidak boleh kosong',
             'harga.gt' => 'harga tidak boleh min',

@@ -28,12 +28,19 @@ class userController extends Controller
     {
         // dd($request->all());
         $user = $request->validate([
-            'email' => 'required|email',
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
             'password' => 'required',
+            'konfirmpassword' => 'required|same:password',
         ],[
-            'email.required' => 'email tidak boleh kosong',
-            'email.email' => 'email tidak valid',
-            'password.required' => 'password tidak boleh kosong'
+            'name.required' => 'Nama Wajib diisi',
+            'email.required' => 'Email Wajib diisi',
+            'email.email' => 'Format email tidak valid',
+            'email.unique'=> 'email sudah pernah digunakan',
+            'password.required' => 'Password wajib diisi',
+            'password.min' => 'Password minimal 8 karakter',
+            'konfirmpassword.required' => 'Konfirmasi Password wajib diisi',
+            'konfirmpassword.same' => 'Konfirmasi Password harus sama dengan Password',
         ]);
 
         User::create([
@@ -47,26 +54,28 @@ class userController extends Controller
 
     public function authenticatelogin(Request $request)
     {
-        $user = $request->validate([
+        $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
-        ],[
-            'email.required' => 'email tidak boleh kosong',
-            'email.email' => 'email tidak valid',
-            'password.required' => 'password tidak boleh kosong'
+        ], [
+            'email.required' => 'Email tidak boleh kosong',
+            'email.email' => 'Email tidak valid',
+            'password.required' => 'Password tidak boleh kosong',
         ]);
-        
-        if (Auth::attempt($request->only('email', 'password'))) {
+    
+        if (Auth::attempt($credentials)) {
             $user = Auth::user();
-
+    
             if ($user->role === 'admin') {
                 return redirect('dashboard'); // Redirect ke dashboard admin.
             } else if ($user->role === 'user') {
                 return redirect()->route('dashboardUser'); // Redirect ke dashboard pengguna.
             }
+        } else {
+            return back()->with('error', 'Email atau password salah');
         }
-        return redirect('login');
-        }
+    }
+    
 
     public function create()
     {
@@ -85,6 +94,7 @@ class userController extends Controller
             'name.required' => 'Nama Wajib diisi',
             'email.required' => 'Email Wajib diisi',
             'email.email' => 'Format email tidak valid',
+            'email.unique'=> 'email sudah pernah digunakan',
             'password.required' => 'Password wajib diisi',
             'password.min' => 'Password minimal 8 karakter',
             'konfirmpassword.required' => 'Konfirmasi Password wajib diisi',

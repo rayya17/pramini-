@@ -9,7 +9,6 @@ use App\Models\pengguna;
 use App\Models\kamar;
 use App\Http\Requests\StorepenggunaRequest;
 use App\Http\Requests\UpdatepenggunaRequest;
-
 use function PHPUnit\Framework\returnCallback;
 
 class adminController extends Controller
@@ -108,6 +107,12 @@ public function update(Request $request, $id)
 }
 
 
+public function index()
+{
+    $penggunas = pengguna::orderBy('created_at', 'desc')->get();;
+    return view('admin.pengguna', compact('penggunas'));
+
+}
 
 public function kepengguna()
 {
@@ -118,11 +123,5 @@ public function kepengguna()
     return view('admin.pengguna', compact('penggunas'))->with('user');
 }
 
-public function index()
-{
-    $penggunas = pengguna::all();
-    return view('admin.pengguna', compact('penggunas'));
-
-}
 
 }

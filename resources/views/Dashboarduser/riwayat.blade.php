@@ -24,7 +24,7 @@
   <link href="{{ asset('startbootstrap/css/sb-admin-2.min.css') }}" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
+@include('alert')
 
 </head>
 
@@ -186,6 +186,11 @@
               @empty
             @endforelse   
           </div>
+          <div class="Page navigation example">
+                        <div class="text-center mt-3 navigation">
+                            {{ $pengguna->links('pagination::bootstrap-4') }}
+                        </div>
+                    </div>
         </div>
 
 
@@ -217,6 +222,7 @@
 
    <!-- Modal Ulasan-->
    @foreach ($pengguna as $item)
+   @if (empty($item->komentar))
         <form action="{{ route('ulasan', ['id' => $item->kamar_id]) }}" method="POST" name="ulasan">
             @csrf
    <div class="modal" id="myModal-{{ $item->kamar_id }}" tabindex="-1" >
@@ -242,6 +248,9 @@
   </div>
 </div>
 </form>
+@else
+        <p>anda telah memberikan ulasan untuk kamar ini.</p>
+    @endif
 @endforeach
 
 

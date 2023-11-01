@@ -46,9 +46,9 @@
                             @if ($errors->has('password'))
                                     <span class="text-danger">{{ $errors->first('password') }}</span>
                                  @endif
-                            <input class="form-control" type="password" name="confirmpassword" placeholder="Konfirmasi Password" >
-                            @if ($errors->has('confirmpassword'))
-                                    <span class="text-danger">{{ $errors->first('confirmpassword') }}</span>
+                            <input class="form-control" type="password" name="konfirmpassword" placeholder="Konfirmasi Password" >
+                            @if ($errors->has('konfirmpassword'))
+                                    <span class="text-danger">{{ $errors->first('konfirmpassword') }}</span>
                                  @endif
                             <div class="form-button">
                                 <button id="submit" type="submit" class="ibtn">Register</button>
