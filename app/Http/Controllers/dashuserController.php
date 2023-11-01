@@ -65,28 +65,28 @@ class dashuserController extends Controller
     public function booking(Request $request)
     {
 
-    // Validasi input
-    $request->validate([
-        'checkin_date' => 'required|date',
-        'checkout_date' => 'required|date|after:checkin_date',
-        'no_telp' => 'required|numeric|regex:/^\d*$/|digits_between:10,12',
-        'alamat' => 'required|min:5|max:200',
-        'ktp' => 'required',
-        'fotobukti'=> 'required',
-    ], [
-    'checkin_date.required' => 'Tanggal check-in wajib diisi.',
-    'checkout_date.required' => 'Tanggal check-out wajib diisi.',
-    'checkout_date.after' => 'Tanggal check-out harus setelah tanggal check-in.',
-    'no_telp.required' => 'Nomor telepon wajib diisi.',
-    'notlp.numeric'=> 'Nomor Telepon Harus Berupa Angka',
-    'notlp.regex'=> 'Format nomor telepon tidak valid.',
-    'notlp.digits_between' => 'Nomor Telepon harus memiliki panjang antara 10 hingga 12 digit.',
-    'alamat.required' => 'Alamat wajib diisi.',
-    'alamat.min'=>'alamat minimal 5 huruf',
-    'alamat.max'=>'alamat maksimal tidak melebihi 200 kalimat',
-    'ktp.required' => 'Foto KTP wajib diUpload.',
-    'fotobukti.required'=> 'foto bukti wajib di Upload',
-]);
+        // Validasi input
+        $request->validate([
+            'checkin_date' => 'required|date',
+            'checkout_date' => 'required|date|after:checkin_date',
+            'no_telp' => 'required|numeric|regex:/^\d*$/|digits_between:10,12',
+            'alamat' => 'required|min:5|max:200',
+            'ktp' => 'required',
+            'fotobukti' => 'required',
+        ], [
+            'checkin_date.required' => 'Tanggal check-in wajib diisi.',
+            'checkout_date.required' => 'Tanggal check-out wajib diisi.',
+            'checkout_date.after' => 'Tanggal check-out harus setelah tanggal check-in.',
+            'no_telp.required' => 'Nomor telepon wajib diisi.',
+            'notlp.numeric' => 'Nomor Telepon Harus Berupa Angka',
+            'notlp.regex' => 'Format nomor telepon tidak valid.',
+            'notlp.digits_between' => 'Nomor Telepon harus memiliki panjang antara 10 hingga 12 digit.',
+            'alamat.required' => 'Alamat wajib diisi.',
+            'alamat.min' => 'alamat minimal 5 huruf',
+            'alamat.max' => 'alamat maksimal tidak melebihi 200 kalimat',
+            'ktp.required' => 'Foto KTP wajib diUpload.',
+            'fotobukti.required' => 'foto bukti wajib di Upload',
+        ]);
 
         $kamar = Kamar::where('id', $request->id_kamar)->first();
         $user_id = Auth::id();
@@ -169,8 +169,6 @@ class dashuserController extends Controller
         ]);
         $ulasan->save();
 
-        return redirect()->back()->with('success', 'Ulasan berhasil disimpan');;
+        return redirect()->back()->with('success', 'Ulasan berhasil disimpan');
     }
-
-
 }
