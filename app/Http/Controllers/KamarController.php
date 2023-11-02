@@ -43,7 +43,7 @@ class KamarController extends Controller
         ], [
             'no_kamar.gt' => 'nomor kamar tidak boleh min',
             'no_kamar.required' => 'nomor kamar tidak boleh kosong',
-            'no_kamar.unique'=> 'nomor kamar tidak boleh sama',
+            'no_kamar.unique' => 'nomor kamar tidak boleh sama',
             'foto.required' => 'foto tidak boleh kosong',
             'foto.mimes' => 'foto tidak valid',
             'jenis_kamar.required' => 'jenis kamar tidak boleh kosong',
@@ -139,13 +139,19 @@ class KamarController extends Controller
      */
     public function destroy(kamar $kamar)
     {
-    $relatedPengguna = pengguna::where('kamar_id', $kamar->id)->get();
+        try {
+            $relatedPengguna = kamar::where('id', $kamar->id)->first();
 
-    if (!$relatedPengguna->isEmpty()) {
-        return redirect()->back()->with('error', 'Data tidak dapat dihapus karena masih digunakan.');
-    }
-        Storage::delete($kamar->foto);
-        $kamar->delete();
-        return redirect()->back()->with('success', "Berhasil menghapus data");
+            if ($relatedPengguna->foto !== null) {
+                if (Storage::disk('public')->exists($relatedPengguna->foto)) {
+                    Storage::disk('public')->delete($relatedPengguna->foto);
+                }
+            }
+
+            $kamar->delete();
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Data tidak dapat dihapus karena masih digunakan.');
+        }
+        return redirect()->back()->with('success', 'Berhasil menghapus data');
     }
 }
