@@ -121,6 +121,8 @@ public function kepengguna()
     ->get();
 
     return view('admin.pengguna', compact('penggunas'))->with('user');
+
+
 }
 
 

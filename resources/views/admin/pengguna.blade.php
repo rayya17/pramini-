@@ -65,12 +65,30 @@
                           <input type="hidden" name="id_pengguna" value="{{ $user->id }}">
                           <button type="submit" class="btn btn-success">Terima</button>
                         </form>
-                        <form action="/tolakpesanan" method="POST">
-                          @method('PATCH')
-                          @csrf
-                          <input type="hidden" name="id_pengguna" value="{{ $user->id }}">
-                          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tolak</button>
+                        <form action="/tolakpesanan" method="POST" id="tolakForm">
+                            @method('PATCH')
+                            @csrf
+                            <input type="hidden" name="id_pengguna" value="{{ $user->id }}">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="btnTolak">Tolak</button>
                         </form>
+
+                        <script>
+                            document.getElementById("btnTolak").addEventListener("click", function() {
+                                Swal.fire({
+                                    title: 'Konfirmasi Tolak Pesanan',
+                                    text: 'Apakah Anda yakin ingin menolak pesanan ini?',
+                                    icon: 'warning',
+                                    showCancelButton: true,
+                                    confirmButtonText: 'Ya, Tolak',
+                                    cancelButtonText: 'Batal',
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        document.getElementById("tolakForm").submit();
+                                    }
+                                });
+                            });
+                        </script>
+
                       </div>
                     </div>
                   </div>

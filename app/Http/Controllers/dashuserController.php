@@ -25,16 +25,16 @@ class dashuserController extends Controller
         $kamar = kamar::findOrFail($id);
         $transaksi = transaksiadmin::all();
         $ulasan = ulasan::where('kamar_id', $id)->get();
-       
+
         return view('Dashboarduser.detailpesanan', ['id' => $id], compact('kamar', 'transaksi', 'ulasan'));
     }
 
     public function riwayatuser()
     {
         $pengguna = Pengguna::where('user_id', Auth::id())
-        ->where('status', 'terima')
-        ->orderBy('created_at', 'desc') 
-        ->paginate(8);
+            ->where('status', 'terima')
+            ->orderBy('created_at', 'desc')
+            ->paginate(8);
 
         return view('Dashboarduser.riwayat', compact('pengguna'))->with('kamar');
     }
@@ -45,8 +45,8 @@ class dashuserController extends Controller
         $user_id = Auth::id();
 
         $kamar = Kamar::where('jenis_kamar', 'like', '%' . $searchTerm . '%')
-        ->orderBy('created_at', 'desc')
-        ->paginate(8);
+            ->orderBy('created_at', 'desc')
+            ->paginate(8);
 
         return view('Dashboarduser.daftarmenu', compact('user_id', 'kamar'));
     }
@@ -55,31 +55,37 @@ class dashuserController extends Controller
     public function booking(Request $request)
     {
 
-    // Validasi input
-    $request->validate([
-        'checkin_date' => 'required|date',
-        'checkout_date' => 'required|date|after:checkin_date',
-        'no_telp' => 'required|numeric|regex:/^\d*$/|digits_between:10,12',
-        'alamat' => 'required|min:5|max:200',
-        'ktp' => 'required',
-        'fotobukti'=> 'required',
-    ], [
-    'checkin_date.required' => 'Tanggal check-in wajib diisi.',
-    'checkout_date.required' => 'Tanggal check-out wajib diisi.',
-    'checkout_date.after' => 'Tanggal check-out harus setelah tanggal check-in.',
-    'no_telp.required' => 'Nomor telepon wajib diisi.',
-    'notlp.numeric'=> 'Nomor Telepon Harus Berupa Angka',
-    'notlp.regex'=> 'Format nomor telepon tidak valid.',
-    'notlp.digits_between' => 'Nomor Telepon harus memiliki panjang antara 10 hingga 12 digit.',
-    'alamat.required' => 'Alamat wajib diisi.',
-    'alamat.min'=>'alamat minimal 5 huruf',
-    'alamat.max'=>'alamat maksimal tidak melebihi 200 kalimat',
-    'ktp.required' => 'Foto KTP wajib diUpload.',
-    'fotobukti.required'=> 'foto bukti wajib di Upload',
-]);
+        // Validasi input
+        $request->validate([
+            'checkin_date' => 'required|date',
+            'checkout_date' => 'required|date|after:checkin_date',
+            'no_telp' => 'required|numeric|regex:/^\d*$/|digits_between:10,12',
+            'alamat' => 'required|min:5|max:200',
+            'ktp' => 'required',
+            'fotobukti' => 'required',
+        ], [
+            'checkin_date.required' => 'Tanggal check-in wajib diisi.',
+            'checkout_date.required' => 'Tanggal check-out wajib diisi.',
+            'checkout_date.after' => 'Tanggal check-out harus setelah tanggal check-in.',
+            'no_telp.required' => 'Nomor telepon wajib diisi.',
+            'notlp.numeric' => 'Nomor Telepon Harus Berupa Angka',
+            'notlp.regex' => 'Format nomor telepon tidak valid.',
+            'notlp.digits_between' => 'Nomor Telepon harus memiliki panjang antara 10 hingga 12 digit.',
+            'alamat.required' => 'Alamat wajib diisi.',
+            'alamat.min' => 'alamat minimal 5 huruf',
+            'alamat.max' => 'alamat maksimal tidak melebihi 200 kalimat',
+            'ktp.required' => 'Foto KTP wajib diUpload.',
+            'fotobukti.required' => 'foto bukti wajib di Upload',
+        ]);
+
+
 
         // $kamar = Kamar::where('id', $request->id_kamar)->first();
         $kamar = Kamar::findOrFail($request->id_kamar);
+        if ($kamar->status === 'booked') {
+            return back()->with('error', "Kamar ini sudah di booking");
+        }
+        
         $user_id = Auth::id();
 
         $kamar->update([
@@ -115,26 +121,7 @@ class dashuserController extends Controller
         return back()->with('success', 'kamar berhasil di booking');
     }
 
-    public function bookingtolak(kamar $kamar, Request $request)
-    {
-        $kamar = Kamar::where('status', 'kosong');
 
-        Kamar::findOrFail($kamar->id)->update([
-            'user_id' => Auth::id(),
-            'status' => 'booked',
-        ]);
-
-        $datapost = new pengguna();
-        $datapost->checkin_date = $request->checkin_date;
-        $datapost->checkout_date = $request->checkout_date;
-        $datapost->user_id = Auth::id();
-        $datapost->kamar_id = $kamar->id;
-        $datapost->no_telp = $request->no_telp;
-        $datapost->alamat = $request->alamat;
-        $datapost->ktp = $request->ktp;
-        $datapost->save();
-        return back();
-    }
 
     public function ulasan(Request $request, $id)
     {
@@ -169,6 +156,4 @@ class dashuserController extends Controller
 
         return redirect()->back()->with('success', 'Ulasan berhasil dikirim');;
     }
-
-
 }

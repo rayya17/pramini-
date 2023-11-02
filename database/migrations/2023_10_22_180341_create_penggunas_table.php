@@ -24,7 +24,7 @@ return new class extends Migration
             $table->datetime('checkout_date');
             $table->string('fotobukti');
             $table->timestamps();
-        });
+        }); 
     }
 
     /**
