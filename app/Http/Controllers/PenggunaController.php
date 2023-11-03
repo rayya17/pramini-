@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\pengguna;
 use App\Http\Requests\StorepenggunaRequest;
 use App\Http\Requests\UpdatepenggunaRequest;
+use App\Models\kamar;
 use Illuminate\Http\Request;
 
 
@@ -76,10 +77,16 @@ class PenggunaController extends Controller
 
     public function tolak(pengguna $pengguna, Request $request)
     {
-        Pengguna::findOrFail($request->id_pengguna)->update([
+        $Pengguna = Pengguna::findOrFail($request->id_pengguna);
+
+        $Pengguna->update([
             'status' => 'tolak',
         ]);
 
-        return back();
+        Kamar::findOrFail($Pengguna->kamar_id)->update([
+            'status' => 'kosong',
+        ]);
+
+        return back()->with('success', "Berhasil menolak permintaaan booking");
     }
 }

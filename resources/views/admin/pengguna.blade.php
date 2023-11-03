@@ -75,7 +75,6 @@
                         <script>
                             document.getElementById("btnTolak").addEventListener("click", function() {
                                 Swal.fire({
-                                    title: 'Konfirmasi Tolak Pesanan',
                                     text: 'Apakah Anda yakin ingin menolak pesanan ini?',
                                     icon: 'warning',
                                     showCancelButton: true,

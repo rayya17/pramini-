@@ -15,7 +15,7 @@ class dashuserController extends Controller
     public function dashboardUser()
     {
         $user_id = Auth::id();
-        $kamar = kamar::orderBy('created_at', 'desc')->paginate(8);
+        $kamar = kamar::where('status', 'kosong')->orderBy('created_at', 'desc')->paginate(8);
         return view('Dashboarduser.daftarmenu', compact('user_id', 'kamar'));
     }
 
@@ -85,7 +85,7 @@ class dashuserController extends Controller
         if ($kamar->status === 'booked') {
             return back()->with('error', "Kamar ini sudah di booking");
         }
-        
+
         $user_id = Auth::id();
 
         $kamar->update([
