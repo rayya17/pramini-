@@ -36,6 +36,18 @@ class dashuserController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(8);
 
+        foreach ($pengguna as $data) {
+            $checkout_date = $data->checkout_date;
+            $now = now();
+
+            if ($checkout_date && $now > $checkout_date) {
+                $data->delete();
+
+                $kamarId = $data->kamar_id;
+                Kamar::where('id', $kamarId)->update(['status' => 'kosong']);
+            }
+        }
+
         return view('Dashboarduser.riwayat', compact('pengguna'))->with('kamar');
     }
 
@@ -144,7 +156,7 @@ class dashuserController extends Controller
         ], [
             'kamar_id.required' => 'ada kesalahan',
             'komentar.required' => 'komentar tidak boleh kosong',
-            'komentar.max' => 'komentar maaksimal hanya 255 karakter'
+            'komentar.max' => 'komentar maksimal hanya 255 karakter'
         ]);
 
         $ulasan = new ulasan([
