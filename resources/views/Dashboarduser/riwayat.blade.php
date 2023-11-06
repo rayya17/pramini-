@@ -64,7 +64,7 @@
         </a>
       </li>
 
-     
+
       <li class="nav-item">
         <a class="nav-link " href="{{ route('riwayatuser') }}">
           <i class="icon">
@@ -103,7 +103,7 @@
           <ul class="navbar-nav ml-auto">
 
 
-           
+
             <div class="topbar-divider d-none d-sm-block"></div>
             <!-- Start Profile-->
             <li class="nav-item dropdown">
@@ -162,7 +162,7 @@
                 </div>
               </div>
               @empty
-            @endforelse   
+            @endforelse
           </div>
           <div class="Page navigation example">
                 <div class="text-center mt-3 navigation">
@@ -212,7 +212,7 @@
       <textarea name="komentar" class="form-control @error('komentar') is-invalid @enderror" value="{{ $item->komentar }}"></textarea>
         @error('komentar')
         <div class="invalid-feedback error-message">{{ $message }}</div>
-        @enderror                         
+        @enderror
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">tutup</button>
@@ -225,6 +225,16 @@
 @else
 <p>anda telah memberikan ulasan untuk kamar ini.</p>
 @endif
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const modalUlasan = document.getElementById("modalUlasan");
+      const myModal = new bootstrap.Modal(document.getElementById("{{$item->kamar_id}}"));
+
+      modalUlasan.addEventListener("click", function () {
+        myModal.show();
+      });
+    });
+    </script>/
 @endforeach
 
 
@@ -244,16 +254,6 @@
   <!-- Page level custom scripts -->
   <script src="js/demo/chart-area-demo.js"></script>
   <script src="js/demo/chart-pie-demo.js"></script>
-  <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const modalUlasan = document.getElementById("modalUlasan");
-    const myModal = new bootstrap.Modal(document.getElementById("{{$item->kamar_id}}"));
-  
-    modalUlasan.addEventListener("click", function () {
-      myModal.show();
-    });
-  });
-  </script>
 
 </body>
 
