@@ -139,14 +139,25 @@ class KamarController extends Controller
      */
     public function destroy(kamar $kamar)
     {
+        $relatedPengguna = pengguna::where('kamar_id', $kamar->id)->get();
         try {
             $relatedPengguna = kamar::where('id', $kamar->id)->first();
-
-
+            if (!$relatedPengguna->isEmpty()) {
+                return redirect()->back()->with('error', 'Data tidak dapat dihapus karena masih digunakan.');
+            }
 
             $kamar->delete();
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Data tidak dapat dihapus karena masih digunakan.');
+
+            Storage::delete($kamar->foto);
+            $kamar->delete();
+            return redirect()->back()->with('success', "Berhasil menghapus data");
+            if ($relatedPengguna->foto !== null) {
+                if (Storage::disk('public')->exists($relatedPengguna->foto)) {
+                    Storage::disk('public')->delete($relatedPengguna->foto);
+                }
+            }
         }
         return redirect()->back()->with('success', 'Berhasil menghapus data');
     }
