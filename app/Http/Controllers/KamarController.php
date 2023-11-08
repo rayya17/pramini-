@@ -142,11 +142,7 @@ class KamarController extends Controller
         try {
             $relatedPengguna = kamar::where('id', $kamar->id)->first();
 
-            if ($relatedPengguna->foto !== null) {
-                if (Storage::disk('public')->exists($relatedPengguna->foto)) {
-                    Storage::disk('public')->delete($relatedPengguna->foto);
-                }
-            }
+
 
             $kamar->delete();
         } catch (\Throwable $th) {
