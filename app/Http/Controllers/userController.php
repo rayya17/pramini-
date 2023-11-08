@@ -49,7 +49,7 @@ class userController extends Controller
             'password' => Hash::make($user['password'])
         ]);
 
-        return redirect('/login');
+        return redirect('/login')->with('success', 'Berhasil, Silahkan Login');
     }
 
     public function authenticatelogin(Request $request)
@@ -63,6 +63,13 @@ class userController extends Controller
             'password.required' => 'Password tidak boleh kosong',
         ]);
     
+        // Periksa apakah email ada dalam basis data
+        $user = User::where('email', $credentials['email'])->first();
+
+        if (!$user) {
+            return back()->with('error', 'Email Belum Terdaftar');
+        }
+
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
     
@@ -72,16 +79,11 @@ class userController extends Controller
                 return redirect()->route('dashboardUser'); // Redirect ke dashboard pengguna.
             }
         } else {
-            return back()->with('error', 'Email atau password salah');
+            return back()->with('error', 'Email Atau Password Anda salah!');
         }
     }
     
 
-    public function create()
-    {
-        $user = User::all();
-        return view('loginregister.register', compact('user'));
-    }
 
     public function store(Request $request)
     {
