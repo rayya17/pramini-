@@ -6,16 +6,18 @@ use App\Models\kamar;
 use App\Models\pengguna;
 use App\Models\ulasan;
 use App\Models\transaksiadmin;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class dashuserController extends Controller
 {
     public function dashboardUser()
     {
         $user_id = Auth::id();
-        $kamar = kamar::where('status', 'kosong')->orderBy('created_at', 'desc')->paginate(8);
+        $kamar = kamar::orderBy('created_at', 'desc')->paginate(8);
         return view('Dashboarduser.daftarmenu', compact('user_id', 'kamar'));
     }
 
@@ -25,30 +27,18 @@ class dashuserController extends Controller
         $kamar = kamar::findOrFail($id);
         $transaksi = transaksiadmin::all();
         $ulasan = ulasan::where('kamar_id', $id)->get();
-
+     
         return view('Dashboarduser.detailpesanan', ['id' => $id], compact('kamar', 'transaksi', 'ulasan'));
     }
 
     public function riwayatuser()
     {
-        $pengguna = Pengguna::where('user_id', Auth::id())
+        $pengguna = Pengguna::where('user_id', Auth::id())  
             ->where('status', 'terima')
             ->orderBy('created_at', 'desc')
             ->paginate(8);
 
-        foreach ($pengguna as $data) {
-            $checkout_date = $data->checkout_date;
-            $now = now();
-
-            if ($checkout_date && $now > $checkout_date) {
-                $data->delete();
-
-                $kamarId = $data->kamar_id;
-                Kamar::where('id', $kamarId)->update(['status' => 'kosong']);
-            }
-        }
-
-        return view('Dashboarduser.riwayat', compact('pengguna'))->with('kamar');
+        return view('Dashboarduser.riwayat', compact('pengguna'));
     }
 
     public function search(Request $request)
@@ -56,7 +46,7 @@ class dashuserController extends Controller
         $searchTerm = $request->input('query');
         $user_id = Auth::id();
 
-        $kamar = Kamar::where('jenis_kamar', 'like', '%' . $searchTerm . '%')
+        $kamar = Kamar::where('jenis_kamar', 'like' . $searchTerm )
             ->orderBy('created_at', 'desc')
             ->paginate(8);
 
@@ -66,7 +56,6 @@ class dashuserController extends Controller
 
     public function booking(Request $request)
     {
-
         // Validasi input
         $request->validate([
             'checkin_date' => 'required|date',
@@ -90,59 +79,91 @@ class dashuserController extends Controller
             'fotobukti.required' => 'foto bukti wajib di Upload',
         ]);
 
-
-
-        // $kamar = Kamar::where('id', $request->id_kamar)->first();
-        $kamar = Kamar::findOrFail($request->id_kamar);
-        if ($kamar->status === 'booked') {
-            return back()->with('error', "Kamar ini sudah di booking");
-        }
-
         $user_id = Auth::id();
 
-        $kamar->update([
-            'status' => 'booked',
-            'user_id' => $user_id
-        ]);
+        $pesan = pengguna::query()->where('kamar_id', $request->id_kamar)
+                 ->latest()
+                 ->first();
 
-        $kamar_id = $kamar->id;
+        // dia sudah pernah dipesan
+        if($pesan){
+            $keluar = Carbon::parse($pesan->checkout_date)->translatedFormat('d F Y');
 
-        $foto = $request->ktp;
-        $fileName = $foto->storeAs('kamar', $foto->hashName());
+            $checkin_date = strtotime($pesan->checkin_date);
+            $checkout_date = strtotime($pesan->checkout_date);
+            $waktu_masuk = strtotime($request->checkin_date);
 
-        $fotobukti = $request->fotobukti;
-        $file = $fotobukti->storeAs('kamar', $fotobukti->hashName());
+            if ($waktu_masuk >= $checkin_date && $waktu_masuk <= $checkout_date) {
+                // $waktu_masuk berada di antara $checkin_date dan $checkout_date
+                // Lakukan sesuatu di sini
+                return back()->with('error', 'Kamar ini masih dipesan oleh pengguna lain hingga tanggal ' . $keluar);
+            //belum pernah dipesan
+            } else {
+                $kamar_id = $request->id_kamar;
 
-        // Menyimpan data ke tabel penggunas
-        Pengguna::create([
-            'kamar_id' => $kamar_id,
-            'transaksiadmin_id' => $request->transaksiadmin_id,
-            'tujuanpembayaran' => $request->tujuanpembayaran,
-            'user_id' => $user_id,
-            'no_telp' => $request->no_telp,
-            'fotobukti' => $file,
-            'status' => 'menunggu',
-            'alamat' => $request->alamat,
-            'ktp' => $fileName,
-            'checkin_date' => $request->checkin_date,
-            'checkout_date' => $request->checkout_date,
+                $foto = $request->ktp;
+                $fileName = $foto->storeAs('kamar', $foto->hashName());
+        
+                $fotobukti = $request->fotobukti;
+                $file = $fotobukti->storeAs('kamar', $fotobukti->hashName());
+        
+                Pengguna::create([
+                    'kamar_id' => $kamar_id,
+                    'transaksiadmin_id' => $request->transaksiadmin_id,
+                    'tujuanpembayaran' => $request->tujuanpembayaran,
+                    'user_id' => $user_id,
+                    'no_telp' => $request->no_telp,
+                    'fotobukti' => $file,
+                    'status' => 'menunggu',
+                    'alamat' => $request->alamat,
+                    'ktp' => $fileName,
+                    'checkin_date' => $request->checkin_date,
+                    'checkout_date' => $request->checkout_date,
+        
+                ]);
 
-        ]);
+                    return back()->with('success', 'kamar berhasil di booking');
 
+            }        
+        } 
+        
+    }   
+        // // belum pernah sama sekali
+        // else{
+        //     $kamar_id = $request->id_kamar;
 
-        return back()->with('success', 'kamar berhasil di booking');
-    }
+        //     $foto = $request->ktp;
+        //     $fileName = $foto->storeAs('kamar', $foto->hashName());
+    
+        //     $fotobukti = $request->fotobukti;
+        //     $file = $fotobukti->storeAs('kamar', $fotobukti->hashName());
+    
+        //     Pengguna::create([
+        //         'kamar_id' => $kamar_id,
+        //         'transaksiadmin_id' => $request->transaksiadmin_id,
+        //         'tujuanpembayaran' => $request->tujuanpembayaran,
+        //         'user_id' => $user_id,
+        //         'no_telp' => $request->no_telp,
+        //         'fotobukti' => $file,
+        //         'status' => 'menunggu',
+        //         'alamat' => $request->alamat,
+        //         'ktp' => $fileName,
+        //         'checkin_date' => $request->checkin_date,
+        //         'checkout_date' => $request->checkout_date,
+        //     ]);
 
+        // return back()->with('success', 'kamar berhasil di booking');
 
+        // }
 
     public function ulasan(Request $request, $id)
     {
 
         // dd($request->all());
         $user_id = Auth::user()->id;
-        $admin = kamar::findOrFail($id);
+        $kamar = kamar::findOrFail($id);
 
-        $ulasanSudahAda = Ulasan::where('kamar_id', $admin->id)
+        $ulasanSudahAda = Ulasan::where('kamar_id', $kamar->id)
             ->where('user_id', $user_id)
             ->first();
 
@@ -160,7 +181,7 @@ class dashuserController extends Controller
         ]);
 
         $ulasan = new ulasan([
-            'kamar_id' => $admin->id,
+            'kamar_id' => $kamar->id,
             'user_id' => $user_id,
             'komentar' => $request->komentar,
         ]);

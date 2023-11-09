@@ -103,13 +103,10 @@
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
-
-
-
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <!-- Nav Item - Search  -->
                         <li class="nav-item dropdown no-arrow d-sm-none">
                             <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -119,30 +116,13 @@
                             <input type="text" class="form-control" name="query"
                                 value="{{ request('query') }}" placeholder="Cari...">
                             </form>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
-                                            aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
                         </li>
 
-                        <!-- Nav Item - Alerts -->
-                       
+                      
 
-                        <div class="topbar-divider d-none d-sm-block"></div>
-            <!-- Start Profile-->
-            <li class="nav-item dropdown">
+                             <div class="topbar-divider d-none d-sm-block"></div>
+                            <!-- Start Profile-->
+                            <li class="nav-item dropdown">
                                 <a class="nav-link py-0 d-flex align-items-center" href="#" id="userDropdown"
                                     role="button" data-bs-toggle="dropdown" aria-expanded="false">
 
@@ -157,17 +137,6 @@
                                     </form>
                                 </ul>
                             </li>
-                            <!-- End Profile-->
-                        <!-- Nav Item - User Information -->
-                        <!-- <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
-                            </a> 
-                        </li> -->
-
                     </ul>
 
                 </nav>
@@ -200,7 +169,7 @@
                             @foreach ($ulasan as $u)
                                 <div class="media mb-0">
                                     <div class="media-body">
-                                        <h6 class="mb-0">{{ $u->user->name }}</h6>
+                                        <h5 class="mb-0">{{ $u->user->name }}</h5>
                                         <p class="mt-1">{{ $u->komentar }}</p>
                                     </div>
                                 </div>
@@ -220,12 +189,12 @@
                         <input type="hidden" value="{{ $kamar->id }}" name="id_kamar">
                         <h4 class="card-title">{{$kamar->jenis_kamar}}</h4>
                         <p>{{$kamar->deskripsi}}</p>
-                    <p>Rp. {{ number_format($kamar->harga, 0, ',', '.')}} </p>
+                        <p>Rp. {{ number_format($kamar->harga, 0, ',', '.')}} </p>
                     <d class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Masuk</label>
-                                <input type="date" name="checkin_date" class="form-control">
+                                <input type="date" name="checkin_date" class="form-control" min="{{ date('Y-m-d') }}">
                                 @if ($errors->has('checkin_date'))
                                     <span class="text-danger">{{ $errors->first('checkin_date') }}</span>
                                  @endif
@@ -234,7 +203,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Keluar</label>
-                                <input type="date" name="checkout_date" class="form-control">
+                                <input type="date" name="checkout_date" class="form-control" min="{{ date('Y-m-d') }}">
                                 @if ($errors->has('checkout_date'))
                                     <span class="text-danger">{{ $errors->first('checkout_date') }}</span>
                                  @endif
@@ -309,16 +278,7 @@
         </div>
       
     </div>
-
-
-
-
-
-
-
-                <!-- /.container-fluid -->
-
-            </div>
+</div>
             <!-- End of Main Content -->
 
             <!-- Footer -->
@@ -335,11 +295,6 @@
         <!-- End of Content Wrapper -->
 
     </div>
-
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
 
 
 
