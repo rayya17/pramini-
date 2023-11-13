@@ -54,13 +54,13 @@
                                 @csrf
                                 @method('PUT')
                                 <div class="form-group">
-                                  <label for="no">No kamar</label>
-                                  <input type="text" class="form-control" id="no_kamar" name="no_kamar" value="{{ $kamar->no_kamar }}">
-                                  @error('no_kamar')
-                                  <p class="text-danger">
-                                    {{ $message }}
-                                  </p>
-                                  @enderror
+                                    <label for="no">No kamar</label>
+                                    <input type="text" class="form-control" id="no_kamar" name="no_kamar" value="{{ old('no_kamar', $kamar->no_kamar) }}">
+                                    @error('no_kamar')
+                                    <p class="text-danger">
+                                      {{ $message }}
+                                    </p>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                   <label for="jenis_kamar">Jenis Kamar</label>
@@ -145,7 +145,7 @@
               @csrf
               <div class="form-group">
                 <label for="no">No</label>
-                <input type="text" class="form-control" id="no" name="no_kamar">
+                <input type="text" class="form-control" id="no" name="no_kamar" value="{{ old('no_kamar') }}">
                 @error('no_kamar')
                 <div class="alert alert-danger mt-2">
                   {{ $message }}
@@ -154,7 +154,7 @@
               </div>
               <div class="form-group">
                 <label for="inputfoto">Foto</label>
-                <input type="file" class="form-control" id="inputfoto" name="foto">
+                <input type="file" class="form-control" id="inputfoto" name="foto" value="{{ old('foto') }}">
                 @error('foto')
                 <div class="alert alert-danger mt-2">
                   {{ $message }}
@@ -163,7 +163,7 @@
               </div>
               <div class="form-group">
                 <label for="inputjenis_kamar">Jenis Kamar</label>
-                <input type="text" class="form-control" id="inputjenis_kamar" name="jenis_kamar">
+                <input type="text" class="form-control" id="inputjenis_kamar" name="jenis_kamar" value="{{ old('jenis_kamar') }}">
                 @error('jenis_kamar')
                 <div class="alert alert-danger mt-2">
                   {{ $message }}
@@ -172,7 +172,7 @@
               </div>
               <div class="form-group">
                 <label for="inputdeskripsi">Deskripsi</label>
-                <textarea class="form-control" id="inputdeskripsi" name="deskripsi"></textarea>
+                <textarea class="form-control" id="inputdeskripsi" name="deskripsi">{{ old('deskripsi') }}</textarea>
                 @error('deskripsi')
                 <div class="alert alert-danger mt-2">
                   {{ $message }}
@@ -181,7 +181,7 @@
               </div>
               <div class="form-group">
                 <label for="inputharga">Harga</label>
-                <input type="number" class="form-control" id="inputharga" name="harga">
+                <input type="number" class="form-control" id="inputharga" name="harga" value="{{ old('harga') }}">
                 @error('harga')
                 <div class="alert alert-danger mt-2">
                   {{ $message }}
